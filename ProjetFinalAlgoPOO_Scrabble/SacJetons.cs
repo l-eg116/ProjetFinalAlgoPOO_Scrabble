@@ -6,11 +6,15 @@ namespace ProjetFinalAlgoPOO_Scrabble
 {
     class SacJetons
     {
-        private Jeton[] sac;
+        private List<Jeton> sac = new List<Jeton> { };
 
         public int Taille
         {
-            get { return sac.Length; }
+            get { return sac.Count; }
+        }
+        public List<Jeton> Contenu
+        {
+            get { return this.sac; }
         }
     }
 }
