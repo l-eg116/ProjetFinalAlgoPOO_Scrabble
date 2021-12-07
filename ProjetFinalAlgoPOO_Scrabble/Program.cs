@@ -6,7 +6,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Coucou Hugo !");
         }
     }
 }
