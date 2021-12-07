@@ -1,86 +1,62 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProjetFinalAlgoPOO_Scrabble
 {
     class Jeton
     {
-        private char lettre;
+        private volatile char lettre;
+
+        private static List<char> lettres = new List<char> { };
+        private static List<int> valeurs = new List<int> { };
 
         public char Lettre
         {
             get { return this.lettre; }
         }
-        public int Points
+        public int Valeur
         {
-            get
-            {
-                switch(this.lettre)
-                {
-                    case 'A':
-                        return 1;
-                    case 'B':
-                        return 3;
-                    case 'C':
-                        return 3;
-                    case 'D':
-                        return 2;
-                    case 'E':
-                        return 1;
-                    case 'F':
-                        return 4;
-                    case 'G':
-                        return 2;
-                    case 'H':
-                        return 4;
-                    case 'I':
-                        return 1;
-                    case 'J':
-                        return 8;
-                    case 'K':
-                        return 10;
-                    case 'L':
-                        return 1;
-                    case 'M':
-                        return 2;
-                    case 'N':
-                        return 1;
-                    case 'O':
-                        return 1;
-                    case 'P':
-                        return 3;
-                    case 'Q':
-                        return 8;
-                    case 'R':
-                        return 1;
-                    case 'S':
-                        return 1;
-                    case 'T':
-                        return 1;
-                    case 'U':
-                        return 1;
-                    case 'V':
-                        return 4;
-                    case 'W':
-                        return 10;
-                    case 'X':
-                        return 10;
-                    case 'Y':
-                        return 10;
-                    case 'Z':
-                        return 10;
-                    default:
-                        return 0;
-                }
-            }
+            get { return Jeton.ObtenirValeur(this.lettre); }
         }
 
         public Jeton(char lettre)
         {
             this.lettre = Convert.ToChar(lettre.ToString().ToUpper());
         }
+        public Jeton(char lettre, int valeur)
+        {
+            this.lettre = Convert.ToChar(lettre.ToString().ToUpper());
+            FixerValeur(this.lettre, valeur);
+        }
         public override string ToString()
         {
-            return $"'{this.lettre}' - {this.Points} pt(s)";
+            return $"'{this.lettre}' - {this.Valeur} pt(s)";
+        }
+
+        private static void FixerValeur(char lettre, int valeur)
+        {
+            bool unchanged = true;
+            for(int i = 0; i < Jeton.lettres.Count; i++)
+                if(Jeton.lettres[i] == lettre)
+                {
+                    Jeton.valeurs[i] = valeur;
+                    unchanged = false;
+                    break;
+                }
+
+            if(unchanged)
+            {
+                Jeton.lettres.Add(lettre);
+                Jeton.valeurs.Add(valeur);
+            }
+        }
+        private static int ObtenirValeur(char lettre)
+        {
+            for(int i = 0; i < Jeton.lettres.Count; i++)
+                if(Jeton.lettres[i] == lettre)
+                    return Jeton.valeurs[i];
+
+            return 0;
         }
     }
 }

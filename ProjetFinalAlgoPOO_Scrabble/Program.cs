@@ -6,7 +6,13 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Coucou Hugo !");
+            Jeton jet_a1 = new Jeton('a');
+            Console.WriteLine(jet_a1.ToString());
+            
+            Jeton jet_a2 = new Jeton('a', 2);
+            Console.WriteLine(jet_a1.ToString());
+            
+            Console.WriteLine(jet_a1.ToString());
         }
     }
 }
