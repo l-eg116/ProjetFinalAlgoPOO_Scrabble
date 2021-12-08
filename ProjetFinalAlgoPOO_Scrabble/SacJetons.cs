@@ -39,12 +39,17 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 while(!csvParser.EndOfData)
                 {
                     string[] fields = csvParser.ReadFields();
-                    char lettre = Convert.ToChar(fields[0]);
-                    int valeur = Convert.ToInt32(fields[1]);
-                    int quantite = Convert.ToInt32(fields[2]);
+                    try
+                    {
+                        char lettre = Convert.ToChar(fields[0]);
+                        int valeur = Convert.ToInt32(fields[1]);
+                        int quantite = Convert.ToInt32(fields[2]);
 
-                    for(int i = 0; i < quantite; i++)
-                        this.sac.Add(new Jeton(lettre, valeur));
+                        for(int i = 0; i < quantite; i++)
+                            this.sac.Add(new Jeton(lettre, valeur));
+                    }
+                    catch(System.FormatException) { }
+                    catch(System.IndexOutOfRangeException) { }
                 }
             }
         }
