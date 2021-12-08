@@ -67,12 +67,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
         public override string ToString()
         {
-            string return_str = "";
-
-            foreach(string mot in this.contenu)
-                return_str += mot + " ";
-
-            return return_str;
+            return $"Langue : {this.langue}, {this.Taille} mots";
         }
 
         /// <summary>
