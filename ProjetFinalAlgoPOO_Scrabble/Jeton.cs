@@ -10,19 +10,34 @@ namespace ProjetFinalAlgoPOO_Scrabble
         private static List<char> lettres = new List<char> { };
         private static List<int> valeurs = new List<int> { };
 
+        /// <summary>
+        /// Lettre du Jeton
+        /// </summary>
         public char Lettre
         {
             get { return this.lettre; }
         }
+        /// <summary>
+        /// Valeur du Jeton, stockée dans la classe
+        /// </summary>
         public int Valeur
         {
             get { return Jeton.ObtenirValeur(this.lettre); }
         }
 
+        /// <summary>
+        /// Constructeur pour Jeton
+        /// </summary>
+        /// <param name="lettre">Fixe this.lettre</param>
         public Jeton(char lettre)
         {
             this.lettre = Convert.ToChar(lettre.ToString().ToUpper());
         }
+        /// <summary>
+        /// Constructeur pour Jeton qui fixe la valeur d'un type de Jeton
+        /// </summary>
+        /// <param name="lettre">Fixe this.lettre</param>
+        /// <param name="valeur">Défini la valeur de la lettre à l'échelle de la classe</param>
         public Jeton(char lettre, int valeur)
         {
             this.lettre = Convert.ToChar(lettre.ToString().ToUpper());
@@ -33,6 +48,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
             return $"'{this.lettre}' - {this.Valeur} pt(s)";
         }
 
+        /// <summary>
+        /// Fixe la valeur d'une certaine lettre pour la classe Jeton
+        /// </summary>
+        /// <param name="lettre">Lettre sur le Jeton</param>
+        /// <param name="valeur">Valeur du Jeton</param>
         private static void FixerValeur(char lettre, int valeur)
         {
             bool unchanged = true;
@@ -50,6 +70,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 Jeton.valeurs.Add(valeur);
             }
         }
+        /// <summary>
+        /// Retourne la valeur d'une lettre dans la calsse Jeton
+        /// </summary>
+        /// <param name="lettre">Lettre dont on veut obtenir la valeur</param>
+        /// <returns>Valeur de la lettre</returns>
         private static int ObtenirValeur(char lettre)
         {
             for(int i = 0; i < Jeton.lettres.Count; i++)
