@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.VisualBasic.FileIO;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 
 namespace ProjetFinalAlgoPOO_Scrabble
@@ -46,6 +46,22 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 return_str += jeton.ToString() + "\t";
 
             return return_str;
+        }
+
+        public Jeton Piocher()
+        {
+            if(this.Taille == 0)
+                return null;
+
+            Random random = new Random();
+
+            int i = random.Next(this.Taille);
+            Jeton jeton = this.sac[i];
+            this.sac.RemoveAt(i);
+
+            random = null;
+
+            return jeton;
         }
     }
 }
