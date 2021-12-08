@@ -83,5 +83,13 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
             return jeton;
         }
+        /// <summary>
+        /// Alignement sur la consigne
+        /// </summary>
+        /// <returns></returns>
+        public Jeton Retire_Jeton()
+        {
+            return this.Piocher();
+        }
     }
 }
