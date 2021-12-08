@@ -8,15 +8,26 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         private List<Jeton> sac = new List<Jeton> { };
 
+        /// <summary>
+        /// Nombre de jetons dans le sac
+        /// </summary>
         public int Taille
         {
             get { return sac.Count; }
         }
+        /// <summary>
+        /// Liste des jetons dans le sac
+        /// </summary>
         public List<Jeton> Contenu
         {
             get { return this.sac; }
         }
 
+        /// <summary>
+        /// Créer un nouveau sac de jetons à partir d'un fichier au format .csv avec :
+        /// lettre(char);valeur(int);quantite(int)
+        /// </summary>
+        /// <param name="path">Chemin du fichier csv</param>
         public SacJetons(string path = "Default_SacJetons.csv")
         {
             using(TextFieldParser csvParser = new TextFieldParser(path))
@@ -48,6 +59,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
             return return_str;
         }
 
+        /// <summary>
+        /// Enlève un jeton au hasard du sac
+        /// </summary>
+        /// <returns>Un jeton enlevé du sac</returns>
         public Jeton Piocher()
         {
             if(this.Taille == 0)
