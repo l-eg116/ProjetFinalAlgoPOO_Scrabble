@@ -99,6 +99,38 @@ namespace ProjetFinalAlgoPOO_Scrabble
         {
             return this.Contient(mot);
         }
+        /// <summary>
+        /// Trouve tous les mots que l'on peut faire avec une liste de lettres donnée
+        /// </summary>
+        /// <param name="lettres">string contenant les lettres à disposition</param>
+        /// <returns>Liste des mots faisables</returns>
+        public List<string> MotsPossibles(string lettres)
+        {
+            List<string> mots = new List<string> { };
+
+            lettres = lettres.ToUpper();
+
+            foreach(string mot in this.contenu)
+            {
+                bool possible = true;
+                List<char> temp_lettres = lettres.ToList();
+
+                foreach(char lettre in mot)
+                    if(!temp_lettres.Remove(lettre))
+                    {
+                        possible = false;
+                        break;
+                    }
+
+
+                if(!possible)
+                    continue;
+                else
+                    mots.Add(mot);
+            }
+
+            return mots;
+        }
 
         /// <summary>
         /// Retire les accents d'un string

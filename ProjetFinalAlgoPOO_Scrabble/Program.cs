@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProjetFinalAlgoPOO_Scrabble
 {
@@ -7,17 +8,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
         static void Main(string[] args)
         {
             Dictionnaire fr = new Dictionnaire();
-            
-            Console.WriteLine(fr.Contient("chiasme"));
-            Console.WriteLine(fr.Contient("mélancolie"));
-            Console.WriteLine(fr.Contient("hiraeth"));
-            Console.WriteLine(fr.Contient("table"));
-            Console.WriteLine(fr.Contient("conseil"));
-            Console.WriteLine(fr.Contient("astral"));
-            Console.WriteLine(fr.Contient("manque"));
-            Console.WriteLine(fr.Contient("escargot"));
-            Console.WriteLine(fr.Contient("époustouflant"));
-            Console.WriteLine(fr.Contient("feuilleter"));
+
+            List<string> mots_possible = fr.MotsPossibles("MISSILEs");
+
+            foreach(string mot in mots_possible)
+                Console.Write(mot + " ");
         }
     }
 }
