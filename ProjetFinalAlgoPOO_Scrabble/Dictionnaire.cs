@@ -11,19 +11,34 @@ namespace ProjetFinalAlgoPOO_Scrabble
         private List<string> contenu = new List<string> { };
         private string langue = "unspecified";
 
+        /// <summary>
+        /// Contenu du Dictionnaire
+        /// </summary>
         public List<string> Contenu
         {
             get { return this.contenu; }
         }
+        /// <summary>
+        /// Nombre de mots dans le Dictionnaire
+        /// </summary>
         public int Taille
         {
             get { return this.contenu.Count; }
         }
+        /// <summary>
+        /// Langue du Dictionnaire
+        /// </summary>
         public string Langue
         {
             get { return this.langue; }
         }
 
+        /// <summary>
+        /// Construit un nouveau dictionnaire à partir d'un fichier
+        /// Mettre 'langue "[langue]"' en début de fichier pour définir la langue
+        /// Séparer les mots par des espaces, # devant une ligne à ingnorer
+        /// </summary>
+        /// <param name="path">Chemin du fichier</param>
         public Dictionnaire(string path = "Default_Dictionnaire.txt")
         {
             using(TextFieldParser csvParser = new TextFieldParser(path))
@@ -60,6 +75,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
             return return_str;
         }
 
+        /// <summary>
+        /// Dit si un mot est contenu dans le Dictionnaire
+        /// </summary>
+        /// <param name="mot">Mot à chercher</param>
+        /// <returns>Si le mot est contenu dans le Dictionnaire</returns>
         public bool Contient(string mot)
         {
             mot = RemoveDiacritics(mot);
@@ -70,11 +90,22 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
             return false;
         }
+        /// <summary>
+        /// Alignement sur la nomenclature de la consigne
+        /// </summary>
+        /// <param name="mot">mot</param>
+        /// <returns>this.Contient(mot)</returns>
         public bool RechDichoRecursif(string mot)
         {
             return this.Contient(mot);
         }
 
+        /// <summary>
+        /// Retire les accents d'un string
+        /// (Merci internet)
+        /// </summary>
+        /// <param name="text">Texte d'entrée</param>
+        /// <returns>Texte sans les accents</returns>
         private static string RemoveDiacritics(string text)
         {
             var normalizedString = text.Normalize(NormalizationForm.FormD);
