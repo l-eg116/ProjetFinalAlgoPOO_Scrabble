@@ -7,12 +7,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         static void Main(string[] args)
         {
-            Dictionnaire fr = new Dictionnaire();
-
-            List<string> mots_possible = fr.MotsPossibles("bmeazeaoivk");
-
-            foreach(string mot in mots_possible)
-                Console.Write(mot + " ");
+            Plateau plat = new Plateau();
         }
     }
 }
