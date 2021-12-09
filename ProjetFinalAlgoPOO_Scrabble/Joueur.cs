@@ -10,24 +10,52 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         private string nom;
         private int score = 0;
-        private string[] mot_trouves = null;
+        private List<string> mot_trouves = new List<string> { };
         private List<Jeton> main_courante = new List<Jeton> { };
+
         /// <summary>
         /// Constructeur de la class Joueur, si le nom est null alors la classe n'est pas faisable.
         /// </summary>
         /// <param name="nom">Nom du joueur</param>
         /// <param name="score">Score du joueur</param>
         /// <param name="mot_trouves">Mots trouvés par le joueur</param>
-        public Joueur(string nom, int score, string[] mot_trouves)
+        public Joueur(string nom, int score, List<string> mot_trouves)
         {
-            if(nom != null)
+            if (nom != null)
             {
                 this.nom = nom;
             }
             this.score = score;
             this.mot_trouves = mot_trouves;
         }
-
+        /// <summary>
+        /// Nom du joueur
+        /// </summary>
+        public string Nom
+        {
+            get{ return this.nom; }
+        }
+        /// <summary>
+        /// Score du joueur
+        /// </summary>
+        public int Score
+        {
+            get { return this.score; }
+        }
+        /// <summary>
+        /// Mots trouvés par le joueur
+        /// </summary>
+        public List<string> Mot_Trouves
+        {
+            get { return this.mot_trouves; }
+        }
+        /// <summary>
+        /// Jetons du joueurs
+        /// </summary>
+        public List<Jeton> Main_Courante
+        {
+            get { return this.main_courante; }
+        }
         /// <summary>
         /// Creer un nouveau joueur à partir de Joueurs.txt
         /// </summary>
@@ -64,14 +92,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         /// <param name="mot">Mot à rajouter dans les mots trouvés</param>
         public void Add_Mot(string mot)
         {
-            string[] tableau_remplacement = new string[mot_trouves.Length + 1];
-            for(int i = 0; i < mot_trouves.Length; i++)
-            {
-                tableau_remplacement[i] = mot_trouves[i];
-            }
-            mot_trouves = null;
-            mot_trouves = new string[tableau_remplacement.Length];
-            this.mot_trouves = tableau_remplacement;
+            this.mot_trouves.Add(mot);
         }
 
         /// <summary>
@@ -85,13 +106,25 @@ namespace ProjetFinalAlgoPOO_Scrabble
         public override string ToString()
         {
             string phrase= "Le joueur s'appelle " + nom + ", il a " + score + " points \n";
-            if(mot_trouves != null)
+            if(mot_trouves != null && mot_trouves.Count > 0)
             {
-                for(int i = 0; i < mot_trouves.Length; i++)
+                phrase += "Le joueur a trouvé le(s) mot(s) : ";
+                for (int i = 0; i < mot_trouves.Count - 1; i++)
                 {
-                    phrase += mot_trouves[i] + "\n";
+                    phrase += mot_trouves[i] + "; ";
                 }
+                phrase += mot_trouves[mot_trouves.Count - 1] + "\n";
             }
+            if(main_courante != null && main_courante.Count>0)
+            {
+                phrase += "Le joueur a le(s) jeton(s) suivant dans sa main : ";
+                for (int i = 0; i < main_courante.Count - 1; i++)
+                {
+                    phrase += main_courante[i] + "; ";
+                }
+                phrase += main_courante[main_courante.Count - 1] + "\n";
+            }
+
             return phrase;
         }
 
