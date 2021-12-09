@@ -59,10 +59,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
                     foreach(string mot in fields)
                         if(mot.All(char.IsLetter))
-                            this.contenu.Add(mot.ToUpper());
+                            this.contenu.Add(RemoveDiacritics(mot).ToUpper());
                 }
             }
-
         }
 
         public override string ToString()
@@ -116,7 +115,6 @@ namespace ProjetFinalAlgoPOO_Scrabble
                         possible = false;
                         break;
                     }
-
 
                 if(!possible)
                     continue;

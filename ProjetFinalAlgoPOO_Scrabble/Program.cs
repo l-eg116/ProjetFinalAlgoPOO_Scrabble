@@ -9,7 +9,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         {
             Dictionnaire fr = new Dictionnaire();
 
-            List<string> mots_possible = fr.MotsPossibles("MISSILEs");
+            List<string> mots_possible = fr.MotsPossibles("bmeazeaoivk");
 
             foreach(string mot in mots_possible)
                 Console.Write(mot + " ");
