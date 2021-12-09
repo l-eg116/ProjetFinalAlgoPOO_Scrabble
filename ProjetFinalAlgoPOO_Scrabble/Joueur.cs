@@ -94,10 +94,20 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
             return phrase;
         }
+
+        /// <summary>
+        /// Permet de rajouter un jeton dans la main courante du joueur
+        /// </summary>
+        /// <param name="monjeton">Jeton à rajouter dans la main courante du joueur</param>
         public void Add_Main_Courante(Jeton monjeton)
         {
             this.main_courante.Add(new Jeton(Convert.ToChar(monjeton)));
         }
+
+        /// <summary>
+        /// Permet d'enlever un jeton dans la main courante du joueur
+        /// </summary>
+        /// <param name="monjeton">Jeton à enlever dans la main courante du joueur</param>
         public void Remove_Main_Courante(Jeton monjeton)
         {
             this.main_courante.Remove(new Jeton(Convert.ToChar(monjeton)));
