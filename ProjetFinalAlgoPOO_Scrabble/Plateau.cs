@@ -12,7 +12,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         private const char LETTRE_TRIPLE = 't';
         private const char MOT_DOUBLE = 'D';
         private const char MOT_TRIPLE = 'T';
-        private const char RIEN = ' ';
+        private const char RIEN = '.';
 
         public char[,] Poids
         {
@@ -57,8 +57,18 @@ namespace ProjetFinalAlgoPOO_Scrabble
                             }
                     }
                 }
-                catch(System.FormatException) { this.poids = new char[15, 15]; }
-                catch(System.IndexOutOfRangeException) { this.poids = new char[15, 15]; }
+                catch(System.FormatException)
+                {
+                    for(int i = 0; i < 15; i++)
+                        for(int j = 0; j < 15; j++)
+                            this.poids[i, j] = RIEN;
+                }
+                catch(System.IndexOutOfRangeException)
+                {
+                    for(int i = 0; i < 15; i++)
+                        for(int j = 0; j < 15; j++)
+                            this.poids[i, j] = RIEN;
+                }
             }
 
             this.jetons = new Jeton[15, 15];
@@ -77,12 +87,13 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     {
                         string[] fields = csvParser.ReadFields();
                         for(int j = 0; j < 15; j++)
-                            this.jetons[i, j] = new Jeton(Convert.ToChar(fields[j]));
+                            if(char.IsLetter(Convert.ToChar(fields[j])))
+                                this.jetons[i, j] = new Jeton(Convert.ToChar(fields[j]));
                     }
                 }
                 catch(System.IndexOutOfRangeException) { this.jetons = new Jeton[15, 15]; }
             }
-            
+
             using(TextFieldParser csvParser = new TextFieldParser(path_poids))
             {
                 csvParser.CommentTokens = new string[] { "#" };
@@ -118,6 +129,31 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 catch(System.FormatException) { this.poids = new char[15, 15]; }
                 catch(System.IndexOutOfRangeException) { this.poids = new char[15, 15]; }
             }
+        }
+
+        public override string ToString()
+        {
+            string return_str = "";
+
+            return_str += $"this.jetons = \n";
+            for(int i = 0; i < 15; i++)
+            {
+                for(int j = 0; j < 15; j++)
+                    if(this.jetons[i, j] != null)
+                        return_str += this.jetons[i, j].Lettre + " ";
+                    else
+                        return_str += RIEN + " ";
+                return_str += "\n";
+            }
+            return_str += $"this.poids = \n";
+            for(int i = 0; i < 15; i++)
+            {
+                for(int j = 0; j < 15; j++)
+                    return_str += this.poids[i, j] + " ";
+                return_str += "\n";
+            }
+
+            return return_str;
         }
     }
 }

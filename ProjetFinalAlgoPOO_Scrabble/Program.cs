@@ -7,7 +7,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         static void Main(string[] args)
         {
-            Plateau plat = new Plateau();
+            Plateau plat = new Plateau(@"C:\Users\legco\Downloads\InstancePlateau.txt");
+
+            Console.WriteLine(plat.ToString());
         }
     }
 }
