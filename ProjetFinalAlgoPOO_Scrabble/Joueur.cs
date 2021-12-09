@@ -11,7 +11,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         private string nom;
         private int score = 0;
         private string[] mot_trouves = null;
-        private static List<Jeton> jetons = new List<Jeton> { };
+        private List<Jeton> main_courante = new List<Jeton> { };
         /// <summary>
         /// Constructeur de la class Joueur, si le nom est null alors la classe n'est pas faisable.
         /// </summary>
@@ -42,8 +42,8 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 string[] fields = csvParser.ReadFields();
                 if (!csvParser.EndOfData)
                 {
-                    string nom = fields[0];
-                    int score = Convert.ToInt32(fields[1]);
+                    this.nom = fields[0];
+                    this.score = Convert.ToInt32(fields[1]);
                     fields = csvParser.ReadFields();
                     for(int i = 0; i < fields.Length; i++)
                     {
@@ -52,7 +52,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     fields = csvParser.ReadFields();
                     for(int i = 0; i < fields.Length; i++)
                     {
-                        jetons.Add(new Jeton(Convert.ToChar(fields[i])));
+                        this.main_courante.Add(new Jeton(Convert.ToChar(fields[i])));
                     }
                 }
             }
@@ -71,7 +71,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
             mot_trouves = null;
             mot_trouves = new string[tableau_remplacement.Length];
-            mot_trouves = tableau_remplacement;
+            this.mot_trouves = tableau_remplacement;
         }
 
         /// <summary>
@@ -93,6 +93,14 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 }
             }
             return phrase;
+        }
+        public void Add_Main_Courante(Jeton monjeton)
+        {
+            this.main_courante.Add(new Jeton(Convert.ToChar(monjeton)));
+        }
+        public void Remove_Main_Courante(Jeton monjeton)
+        {
+            this.main_courante.Remove(new Jeton(Convert.ToChar(monjeton)));
         }
     }
 }
