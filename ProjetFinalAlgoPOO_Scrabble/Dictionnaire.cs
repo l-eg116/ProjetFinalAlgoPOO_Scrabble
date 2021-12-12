@@ -131,7 +131,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         /// </summary>
         /// <param name="text">Texte d'entrée</param>
         /// <returns>Texte sans les accents</returns>
-        private static string RemoveDiacritics(string text)
+        public static string RemoveDiacritics(string text)
         {
             var normalizedString = text.Normalize(NormalizationForm.FormD);
             var stringBuilder = new StringBuilder();

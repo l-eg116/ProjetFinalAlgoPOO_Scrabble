@@ -83,5 +83,14 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
             return 0;
         }
+
+        public static bool operator == (Jeton jeton1, Jeton jeton2)
+        {
+            return jeton1.lettre == jeton2.lettre;
+        }
+        public static bool operator != (Jeton jeton1, Jeton jeton2)
+        {
+            return !(jeton1 == jeton2);
+        }
     }
 }
