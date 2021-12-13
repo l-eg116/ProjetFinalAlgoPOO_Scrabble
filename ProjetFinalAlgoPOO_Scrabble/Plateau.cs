@@ -8,6 +8,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         private char[,] poids = new char[15,15];
         private Jeton[,] jetons = new Jeton[15,15];
 
+        private const char CENTRE = 'C';
         private const char LETTRE_DOUBLE = 'd';
         private const char LETTRE_TRIPLE = 't';
         private const char MOT_DOUBLE = 'D';
@@ -117,6 +118,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
                                 case MOT_DOUBLE:
                                     this.poids[i, j] = MOT_DOUBLE;
                                     break;
+                                case CENTRE:
+                                    this.poids[i, j] = CENTRE;
+                                    break;
                                 case MOT_TRIPLE:
                                     this.poids[i, j] = MOT_TRIPLE;
                                     break;
@@ -130,6 +134,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 catch(System.IndexOutOfRangeException) { this.poids = new char[15, 15]; }
             }
         }
+        /// <summary>
+        /// Afficher le plateau du scrabble en couleur
+        /// </summary>
         public void Afficher()
         {
             for(int i = 0; i < poids.GetLength(0); i++)
@@ -138,20 +145,23 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 {
                     switch (poids[i, j])
                     {
-                        case 'T':
+                        case MOT_TRIPLE:
                             Console.BackgroundColor = ConsoleColor.DarkRed;
                             break;
-                        case '+':
+                        case RIEN:
                             Console.BackgroundColor = ConsoleColor.DarkGreen;
                             break;
-                        case 'd':
+                        case LETTRE_DOUBLE:
                             Console.BackgroundColor = ConsoleColor.Cyan;
                             break;
-                        case 'D':
+                        case MOT_DOUBLE:
                             Console.BackgroundColor = ConsoleColor.Magenta;
                             break;
-                        case 't':
+                        case LETTRE_TRIPLE:
                             Console.BackgroundColor = ConsoleColor.Blue;
+                            break;
+                        case CENTRE:
+                            Console.BackgroundColor = ConsoleColor.Yellow;
                             break;
                     }
                 }

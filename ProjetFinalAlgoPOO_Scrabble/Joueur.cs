@@ -123,7 +123,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
         public override string ToString()
         {
-            string phrase= "Le joueur s'appelle " + nom + ", il a " + score + " points \n";
+            string phrase= "Le joueur s'appelle " + nom + ", il a " + score + " point(s) \n";
             if(mot_trouves != null && mot_trouves.Count > 0)
             {
                 phrase += "Le joueur a trouvé le(s) mot(s) : ";
