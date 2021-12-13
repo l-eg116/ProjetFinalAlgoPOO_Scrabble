@@ -130,7 +130,33 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 catch(System.IndexOutOfRangeException) { this.poids = new char[15, 15]; }
             }
         }
-
+        public void Afficher()
+        {
+            for(int i = 0; i < poids.GetLength(0); i++)
+            {
+                for (int j = 0; j < poids.GetLength(1); j++)
+                {
+                    switch (poids[i, j])
+                    {
+                        case 'T':
+                            Console.BackgroundColor = ConsoleColor.DarkRed;
+                            break;
+                        case '+':
+                            Console.BackgroundColor = ConsoleColor.DarkGreen;
+                            break;
+                        case 'd':
+                            Console.BackgroundColor = ConsoleColor.Cyan;
+                            break;
+                        case 'D':
+                            Console.BackgroundColor = ConsoleColor.Magenta;
+                            break;
+                        case 't':
+                            Console.BackgroundColor = ConsoleColor.Blue;
+                            break;
+                    }
+                }
+            }
+        }
         public override string ToString()
         {
             string return_str = "";
