@@ -212,6 +212,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
             Console.ResetColor();
         }
+        /// <summary>
+        /// Afficher la légende des couleurs du plateau
+        /// </summary>
         public static void AfficherLegende()
         {
             Console.WriteLine("\nAvec : \n");
