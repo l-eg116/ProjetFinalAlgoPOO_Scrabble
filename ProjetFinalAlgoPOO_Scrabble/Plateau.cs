@@ -204,6 +204,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         {
             mot = Dictionnaire.RemoveDiacritics(mot.ToUpper());
             List<string> mots_crees = new List<string> { mot };
+            bool connecte = false;
 
             switch(rot)
             {
@@ -211,9 +212,16 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     if(y + mot.Length > 15)
                         return false;
 
+                    connecte |= (y - 1 >= 0 && this.jetons[x, y - 1] != null)
+                        || (y + mot.Length < 15 && this.jetons[x, y + mot.Length] != null);
+
                     for(int i = 0; i < mot.Length; i++)
                         if(this.jetons[x, y + i] == null/* || this.jetons[x, y + i].Lettre == mot[i]*/)
                         {
+                            connecte |= (x - 1 >= 0 && this.jetons[x - 1, y + i] != null)
+                                || (x + 1 < 15 && this.jetons[x + 1, y + i] != null)
+                                || this.poids[x, y + i] == CENTRE;
+
                             string mot_cree = mot[i].ToString();
                             int j = -1;
                             while(x + j >= 0 && this.jetons[x + j, y + i] != null)
@@ -249,9 +257,17 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 case VERTICAL:
                     if(x + mot.Length > 15)
                         return false;
+
+                    connecte |= (x - 1 >= 0 && this.jetons[x - 1, y] != null)
+                        || (x + mot.Length < 15 && this.jetons[x + mot.Length, y] != null);
+
                     for(int i = 0; i < mot.Length; i++)
                         if(this.jetons[x + i, y] == null/* || this.jetons[x + i, y].Lettre == mot[i]*/)
                         {
+                            connecte |= (y - 1 >= 0 && this.jetons[x + i, y - 1] != null)
+                                || (y + 1 < 15 && this.jetons[x + i, y + 1] != null)
+                                || this.poids[x + i, y] == CENTRE;
+
                             string mot_cree = mot[i].ToString();
                             int j = -1;
                             while(y + j >= 0 && this.jetons[x + i, y + j] != null)
@@ -288,6 +304,8 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     return false;
             }
 
+            if(!connecte)
+                return false;
             foreach(string mot_cree in mots_crees)
                 if(mot_cree.Length > 1 && !dico.Contient(mot_cree))
                     return false;
