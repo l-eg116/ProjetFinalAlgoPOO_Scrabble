@@ -179,25 +179,34 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     {
                         case MOT_TRIPLE:
                             Console.BackgroundColor = ConsoleColor.DarkRed;
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
                             break;
                         case RIEN:
                             Console.BackgroundColor = ConsoleColor.DarkGreen;
+                            Console.ForegroundColor = ConsoleColor.DarkGreen;
                             break;
                         case LETTRE_DOUBLE:
                             Console.BackgroundColor = ConsoleColor.Cyan;
+                            Console.ForegroundColor = ConsoleColor.Cyan;
                             break;
                         case MOT_DOUBLE:
                             Console.BackgroundColor = ConsoleColor.Magenta;
+                            Console.ForegroundColor = ConsoleColor.Magenta;
                             break;
                         case LETTRE_TRIPLE:
                             Console.BackgroundColor = ConsoleColor.Blue;
+                            Console.ForegroundColor = ConsoleColor.Blue;
                             break;
                         case CENTRE:
                             Console.BackgroundColor = ConsoleColor.Yellow;
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             break;
                     }
+                    Console.Write(poids[i, j] + " ");
                 }
+                Console.WriteLine();
             }
+            Console.ResetColor();
         }
 
         public bool TesterMot(string mot, int x, int y, char rot, Dictionnaire dico, List<string> out_mots_crees = null)
