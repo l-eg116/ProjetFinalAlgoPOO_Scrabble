@@ -52,6 +52,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
                                 case MOT_TRIPLE:
                                     this.poids[i, j] = MOT_TRIPLE;
                                     break;
+                                case CENTRE:
+                                    this.poids[i, j] = CENTRE;
+                                    break;
                                 default:
                                     this.poids[i, j] = RIEN;
                                     break;
@@ -118,11 +121,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
                                 case MOT_DOUBLE:
                                     this.poids[i, j] = MOT_DOUBLE;
                                     break;
-                                case CENTRE:
-                                    this.poids[i, j] = CENTRE;
-                                    break;
                                 case MOT_TRIPLE:
                                     this.poids[i, j] = MOT_TRIPLE;
+                                    break;
+                                case CENTRE:
+                                    this.poids[i, j] = CENTRE;
                                     break;
                                 default:
                                     this.poids[i, j] = RIEN;
@@ -134,6 +137,31 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 catch(System.IndexOutOfRangeException) { this.poids = new char[15, 15]; }
             }
         }
+        public override string ToString()
+        {
+            string return_str = "";
+
+            return_str += $"this.jetons = \n";
+            for(int i = 0; i < 15; i++)
+            {
+                for(int j = 0; j < 15; j++)
+                    if(this.jetons[i, j] != null)
+                        return_str += this.jetons[i, j].Lettre + " ";
+                    else
+                        return_str += RIEN + " ";
+                return_str += "\n";
+            }
+            return_str += $"this.poids = \n";
+            for(int i = 0; i < 15; i++)
+            {
+                for(int j = 0; j < 15; j++)
+                    return_str += this.poids[i, j] + " ";
+                return_str += "\n";
+            }
+
+            return return_str;
+        }
+        
         /// <summary>
         /// Afficher le plateau du scrabble en couleur
         /// </summary>
@@ -166,30 +194,6 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     }
                 }
             }
-        }
-        public override string ToString()
-        {
-            string return_str = "";
-
-            return_str += $"this.jetons = \n";
-            for(int i = 0; i < 15; i++)
-            {
-                for(int j = 0; j < 15; j++)
-                    if(this.jetons[i, j] != null)
-                        return_str += this.jetons[i, j].Lettre + " ";
-                    else
-                        return_str += RIEN + " ";
-                return_str += "\n";
-            }
-            return_str += $"this.poids = \n";
-            for(int i = 0; i < 15; i++)
-            {
-                for(int j = 0; j < 15; j++)
-                    return_str += this.poids[i, j] + " ";
-                return_str += "\n";
-            }
-
-            return return_str;
         }
     }
 }
