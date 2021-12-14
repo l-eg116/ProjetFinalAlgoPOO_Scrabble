@@ -9,7 +9,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
         {
             Plateau plat = new Plateau(@"C:\Users\33782\Source\Repos\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau2.txt");
             plat.Afficher();
-            
+            Legende();
+        }
+        static void Legende()
+        {
             Console.WriteLine("\nAvec : \n");
             Console.BackgroundColor = ConsoleColor.Yellow;
             Console.Write("  ");
