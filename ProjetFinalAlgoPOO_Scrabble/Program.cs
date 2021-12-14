@@ -7,34 +7,41 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         static void Main(string[] args)
         {
-            Plateau plat = new Plateau(@"C:\Users\legco\Source\Repos\l-eg116\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau2.txt");
-            Dictionnaire dict = new Dictionnaire();
-            SacJetons sac = new SacJetons();
-            Console.WriteLine(sac.ToString());
-            Console.ReadKey();
+            Plateau plat = new Plateau(@"C:\Users\33782\Source\Repos\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau2.txt");
+            plat.Afficher();
+            Legende();
+        }
+        static void Legende()
+        {
+            Console.WriteLine("\nAvec : \n");
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write(" et ");
+            Console.BackgroundColor = ConsoleColor.Magenta;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine(" : MOT COMPTE DOUBLE ");
 
-            while(true)
-            {
-                Console.Clear();
-                Console.WriteLine(plat.ToString());
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine(" : MOT COMPTE TRIPLE");
 
-                Console.WriteLine();
+            Console.BackgroundColor = ConsoleColor.Cyan;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine(" : LETTRE COMPTE DOUBLE");
 
-                Console.Write("mot: ");
-                string mot = Console.ReadLine();
-                Console.Write("x: ");
-                int x = Convert.ToInt32(Console.ReadLine());
-                Console.Write("y: ");
-                int y = Convert.ToInt32(Console.ReadLine());
-                Console.Write("rot: ");
-                char rot = Convert.ToChar(Console.ReadLine().ToUpper());
-                List<string> mots = new List<string> { };
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine(" : LETTRE COMPTE TRIPLE");
 
-                Console.WriteLine();
-
-                Console.WriteLine(plat.PoserMot(mot, x, y, rot, dict, mots));
-                Console.ReadKey();
-            }
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.Write("  ");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine(" : AUCUN BONUS");
         }
     }
 }
