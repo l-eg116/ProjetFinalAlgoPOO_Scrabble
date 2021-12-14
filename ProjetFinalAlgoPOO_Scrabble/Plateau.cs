@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using System;
+using System.Collections.Generic;
 
 namespace ProjetFinalAlgoPOO_Scrabble
 {
@@ -14,6 +15,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
         private const char MOT_DOUBLE = 'D';
         private const char MOT_TRIPLE = 'T';
         private const char RIEN = '.';
+
+        public const char HORIZONTAL = 'H';
+        public const char VERTICAL = 'V';
 
         public char[,] Poids
         {
@@ -161,7 +165,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
             return return_str;
         }
-        
+
         /// <summary>
         /// Afficher le plateau du scrabble en couleur
         /// </summary>
@@ -169,9 +173,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
         {
             for(int i = 0; i < poids.GetLength(0); i++)
             {
-                for (int j = 0; j < poids.GetLength(1); j++)
+                for(int j = 0; j < poids.GetLength(1); j++)
                 {
-                    switch (poids[i, j])
+                    switch(poids[i, j])
                     {
                         case MOT_TRIPLE:
                             Console.BackgroundColor = ConsoleColor.DarkRed;
@@ -194,6 +198,104 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     }
                 }
             }
+        }
+
+        public bool TesterMot(string mot, int x, int y, char rot, Dictionnaire dico, List<string> out_mots_crees = null)
+        {
+            mot = Dictionnaire.RemoveDiacritics(mot.ToUpper());
+            List<string> mots_crees = new List<string> { mot };
+
+            switch(rot)
+            {
+                case HORIZONTAL:
+                    if(y + mot.Length > 15)
+                        return false;
+
+                    for(int i = 0; i < mot.Length; i++)
+                        if(this.jetons[x, y + i] == null/* || this.jetons[x, y + i].Lettre == mot[i]*/)
+                        {
+                            string mot_cree = mot[i].ToString();
+                            int j = -1;
+                            while(x + j >= 0 && this.jetons[x + j, y + i] != null)
+                            {
+                                mot_cree = this.jetons[x + j, y + i].Lettre + mot_cree;
+                                j--;
+                            }
+                            j = 1;
+                            while(x + j < 15 && this.jetons[x + j, y + i] != null)
+                            {
+                                mot_cree += this.jetons[x + j, y + i].Lettre;
+                                j++;
+                            }
+                            /*if(mot_cree.Length > 1)*/
+                            mots_crees.Add(mot_cree);
+                        }
+                        else return false;
+
+                    int k = -1;
+                    while(y + k >= 0 && this.jetons[x, y + k] != null)
+                    {
+                        mots_crees[0] = this.jetons[x, y + k].Lettre + mots_crees[0];
+                        k--;
+                    }
+                    k = 1;
+                    while(y + k < 15 && this.jetons[x, y + k] != null)
+                    {
+                        mots_crees[0] += this.jetons[x, y + k].Lettre;
+                        k++;
+                    }
+
+                    break;
+                case VERTICAL:
+                    if(x + mot.Length > 15)
+                        return false;
+                    for(int i = 0; i < mot.Length; i++)
+                        if(this.jetons[x + i, y] == null/* || this.jetons[x + i, y].Lettre == mot[i]*/)
+                        {
+                            string mot_cree = mot[i].ToString();
+                            int j = -1;
+                            while(y + j >= 0 && this.jetons[x + i, y + j] != null)
+                            {
+                                mot_cree = this.jetons[x + i, y + j].Lettre + mot_cree;
+                                j--;
+                            }
+                            j = 1;
+                            while(y + j < 15 && this.jetons[x + i, y + j] != null)
+                            {
+                                mot_cree += this.jetons[x + i, y + j].Lettre;
+                                j++;
+                            }
+                            /*if(mot_cree.Length > 1)*/
+                            mots_crees.Add(mot_cree);
+                        }
+                        else return false;
+
+                    int n = -1;
+                    while(x + n >= 0 && this.jetons[x + n, y] != null)
+                    {
+                        mots_crees[0] = this.jetons[x + n, y].Lettre + mots_crees[0];
+                        n--;
+                    }
+                    n = 1;
+                    while(x + n < 15 && this.jetons[x + n, y] != null)
+                    {
+                        mots_crees[0] += this.jetons[x + n, y].Lettre;
+                        n++;
+                    }
+
+                    break;
+                default:
+                    return false;
+            }
+
+            foreach(string mot_cree in mots_crees)
+                if(mot_cree.Length > 1 && !dico.Contient(mot_cree))
+                    return false;
+
+            if(out_mots_crees != null)
+                out_mots_crees.AddRange(mots_crees);
+
+            return true;
         }
     }
 }

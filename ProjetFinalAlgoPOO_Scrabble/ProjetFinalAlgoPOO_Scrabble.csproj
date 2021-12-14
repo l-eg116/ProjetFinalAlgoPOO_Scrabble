@@ -15,7 +15,7 @@
     <None Update="Default_SacJetons.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Joueurs.txt">
+    <None Update="Test_Joueur.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>

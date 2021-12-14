@@ -86,7 +86,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
         public static bool operator == (Jeton jeton1, Jeton jeton2)
         {
-            return jeton1.lettre == jeton2.lettre;
+            return (jeton1 is null && jeton2 is null) || (jeton1 is Jeton && jeton2 is Jeton && jeton1.lettre == jeton2.lettre);
         }
         public static bool operator != (Jeton jeton1, Jeton jeton2)
         {
