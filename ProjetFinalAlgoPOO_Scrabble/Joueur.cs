@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ProjetFinalAlgoPOO_Scrabble
 {
@@ -81,7 +82,8 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 fields = csvParser.ReadFields();
                 if(fields != null)
                     foreach(string mot in fields)
-                        this.mot_trouves.Add(Dictionnaire.RemoveDiacritics(mot.ToUpper()));
+                        if(mot.Length > 0)
+                            this.mot_trouves.Add(Dictionnaire.RemoveDiacritics(mot.ToUpper()));
 
                 fields = csvParser.ReadFields();
                 if(fields != null)
@@ -146,10 +148,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
         }
         public void Afficher()
         {
-            Console.Write( "\n-Score : " + score + "\n-Jetons en main : " );
+            Console.Write("\n-Score : " + score + "\n-Jetons en main : ");
             if(main_courante != null && main_courante.Count > 0)
             {
-                for (int i = 0; i < main_courante.Count - 1; i++)
+                for(int i = 0; i < main_courante.Count - 1; i++)
                 {
                     Console.Write(main_courante[i] + "; ");
                 }
@@ -164,7 +166,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         /// Permet de rajouter un jeton dans la main courante du joueur
         /// </summary>
         /// <param name="monjeton">Jeton à rajouter dans la main courante du joueur</param>
-        
+
         public void DonnerJeton(Jeton monjeton)
         {
             this.main_courante.Add(monjeton);
@@ -206,6 +208,21 @@ namespace ProjetFinalAlgoPOO_Scrabble
         public bool Remove_Main_Courante(Jeton monjeton)
         {
             return this.EnleverJeton(monjeton);
+        }
+
+        public void Sauvegarder(string folder, string file_name = "Sauvegarde_Joueur.csv")
+        {
+            string path = System.IO.Path.Combine(folder, file_name);
+
+            using(StreamWriter file = new StreamWriter(path))
+            {
+                file.WriteLine($"\"{this.nom}\";{this.score}");
+                foreach(string mot in this.mot_trouves)
+                    file.Write(mot + ";");
+                file.WriteLine();
+                foreach(Jeton jeton in this.main_courante)
+                    file.Write(jeton.Lettre + ";");
+            }
         }
     }
 }

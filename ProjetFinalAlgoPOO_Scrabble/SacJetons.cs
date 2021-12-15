@@ -99,7 +99,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
             using(StreamWriter file = new StreamWriter(path))
             {
-                foreach(Jeton jeton in sac)
+                foreach(Jeton jeton in this.sac)
                     file.WriteLine($"{jeton.Lettre};{jeton.Valeur};1");
             }
         }
