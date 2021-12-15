@@ -215,7 +215,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                             Console.BackgroundColor = ConsoleColor.Yellow;
                             break;
                     }
-                    if(jetons[i,j] != null)
+                    if(jetons[i, j] != null)
                     {
                         Console.ForegroundColor = ConsoleColor.Black;
                         Console.BackgroundColor = ConsoleColor.White;
@@ -278,116 +278,89 @@ namespace ProjetFinalAlgoPOO_Scrabble
         /// <param name="dico">Dictionnaire dans lequel les mots crées doivent exister</param>
         /// <param name="out_mots_crees">Liste à laquelle sera rajoutée les mots crées</param>
         /// <returns>Si le mot peut être posé</returns>
-        public bool TesterMot(string mot, int x, int y, char rot, Dictionnaire dico, List<string> out_mots_crees = null)
+        public bool TesterMot(string mot, int x, int y, char rot, Dictionnaire dico,
+            List<Jeton> out_jetons_utilises = null, List<string> out_mots_crees = null)
         {
             mot = Dictionnaire.RemoveDiacritics(mot.ToUpper());
             List<string> mots_crees = new List<string> { mot };
+            List<Jeton> jetons_utilises = new List<Jeton> { };
             bool connecte = false;
 
+            Jeton[,] temp_jetons = new Jeton[15,15];
             switch(rot)
             {
-                case HORIZONTAL:
-                    if(y + mot.Length > 15)
-                        return false;
-
-                    connecte |= (y - 1 >= 0 && this.jetons[x, y - 1] != null)
-                        || (y + mot.Length < 15 && this.jetons[x, y + mot.Length] != null);
-
-                    for(int i = 0; i < mot.Length; i++)
-                        if(this.jetons[x, y + i] == null/* || this.jetons[x, y + i].Lettre == mot[i]*/)
-                        {
-                            connecte |= (x - 1 >= 0 && this.jetons[x - 1, y + i] != null)
-                                || (x + 1 < 15 && this.jetons[x + 1, y + i] != null)
-                                || this.poids[x, y + i] == CENTRE;
-
-                            string mot_cree = mot[i].ToString();
-                            int j = -1;
-                            while(x + j >= 0 && this.jetons[x + j, y + i] != null)
-                            {
-                                mot_cree = this.jetons[x + j, y + i].Lettre + mot_cree;
-                                j--;
-                            }
-                            j = 1;
-                            while(x + j < 15 && this.jetons[x + j, y + i] != null)
-                            {
-                                mot_cree += this.jetons[x + j, y + i].Lettre;
-                                j++;
-                            }
-                            /*if(mot_cree.Length > 1)*/
-                            mots_crees.Add(mot_cree);
-                        }
-                        else return false;
-
-                    int k = -1;
-                    while(y + k >= 0 && this.jetons[x, y + k] != null)
-                    {
-                        mots_crees[0] = this.jetons[x, y + k].Lettre + mots_crees[0];
-                        k--;
-                    }
-                    k = 1;
-                    while(y + k < 15 && this.jetons[x, y + k] != null)
-                    {
-                        mots_crees[0] += this.jetons[x, y + k].Lettre;
-                        k++;
-                    }
-
-                    break;
                 case VERTICAL:
-                    if(x + mot.Length > 15)
-                        return false;
-
-                    connecte |= (x - 1 >= 0 && this.jetons[x - 1, y] != null)
-                        || (x + mot.Length < 15 && this.jetons[x + mot.Length, y] != null);
-
-                    for(int i = 0; i < mot.Length; i++)
-                        if(this.jetons[x + i, y] == null/* || this.jetons[x + i, y].Lettre == mot[i]*/)
-                        {
-                            connecte |= (y - 1 >= 0 && this.jetons[x + i, y - 1] != null)
-                                || (y + 1 < 15 && this.jetons[x + i, y + 1] != null)
-                                || this.poids[x + i, y] == CENTRE;
-
-                            string mot_cree = mot[i].ToString();
-                            int j = -1;
-                            while(y + j >= 0 && this.jetons[x + i, y + j] != null)
-                            {
-                                mot_cree = this.jetons[x + i, y + j].Lettre + mot_cree;
-                                j--;
-                            }
-                            j = 1;
-                            while(y + j < 15 && this.jetons[x + i, y + j] != null)
-                            {
-                                mot_cree += this.jetons[x + i, y + j].Lettre;
-                                j++;
-                            }
-                            /*if(mot_cree.Length > 1)*/
-                            mots_crees.Add(mot_cree);
-                        }
-                        else return false;
-
-                    int n = -1;
-                    while(x + n >= 0 && this.jetons[x + n, y] != null)
-                    {
-                        mots_crees[0] = this.jetons[x + n, y].Lettre + mots_crees[0];
-                        n--;
-                    }
-                    n = 1;
-                    while(x + n < 15 && this.jetons[x + n, y] != null)
-                    {
-                        mots_crees[0] += this.jetons[x + n, y].Lettre;
-                        n++;
-                    }
-
+                    for(int x_ = 0; x_ < 15; x_++)
+                        for(int y_ = 0; y_ < 15; y_++)
+                            temp_jetons[x_, y_] = this.jetons[y_, x_];
+                    int temp = x;
+                    x = y;
+                    y = temp;
+                    break;
+                case HORIZONTAL:
+                    for(int x_ = 0; x_ < 15; x_++)
+                        for(int y_ = 0; y_ < 15; y_++)
+                            temp_jetons[x_, y_] = this.jetons[x_, y_];
                     break;
                 default:
                     return false;
             }
 
+            if(y + mot.Length > 15)
+                return false;
+
+            connecte |= (y - 1 >= 0 && temp_jetons[x, y - 1] != null)
+                || (y + mot.Length < 15 && temp_jetons[x, y + mot.Length] != null);
+
+            for(int i = 0; i < mot.Length; i++)
+                if(temp_jetons[x, y + i] == null || temp_jetons[x, y + i].Lettre == mot[i])
+                {
+                    if(temp_jetons[x, y + i] == null)
+                        jetons_utilises.Add(new Jeton(mot[i]));
+
+                    connecte |= (x - 1 >= 0 && temp_jetons[x - 1, y + i] != null)
+                        || (x + 1 < 15 && temp_jetons[x + 1, y + i] != null)
+                        || this.poids[x, y + i] == CENTRE;
+
+                    string mot_cree = mot[i].ToString();
+                    int j = -1;
+                    while(x + j >= 0 && temp_jetons[x + j, y + i] != null)
+                    {
+                        mot_cree = temp_jetons[x + j, y + i].Lettre + mot_cree;
+                        j--;
+                    }
+                    j = 1;
+                    while(x + j < 15 && temp_jetons[x + j, y + i] != null)
+                    {
+                        mot_cree += temp_jetons[x + j, y + i].Lettre;
+                        j++;
+                    }
+                    if(mot_cree.Length > 1 && temp_jetons[x, y + i] == null)
+                        mots_crees.Add(mot_cree);
+                }
+                else return false;
+
+            int k = -1;
+            while(y + k >= 0 && temp_jetons[x, y + k] != null)
+            {
+                mots_crees[0] = temp_jetons[x, y + k].Lettre + mots_crees[0];
+                k--;
+            }
+            k = mot.Length;
+            while(y + k < 15 && temp_jetons[x, y + k] != null)
+            {
+                mots_crees[0] += temp_jetons[x, y + k].Lettre;
+                k++;
+            }
+
             if(!connecte)
                 return false;
             foreach(string mot_cree in mots_crees)
-                if(mot_cree.Length > 1 && !dico.Contient(mot_cree))
+                if(!dico.Contient(mot_cree))
                     return false;
 
+            if(out_jetons_utilises != null)
+                out_jetons_utilises.AddRange(jetons_utilises);
             if(out_mots_crees != null)
                 out_mots_crees.AddRange(mots_crees);
 
@@ -403,243 +376,180 @@ namespace ProjetFinalAlgoPOO_Scrabble
         /// <param name="dico">Dictionnaire dans lequel les mots crées doivent exister</param>
         /// <param name="out_mots_crees">Liste à laquelle sera rajoutée les mots crées</param>
         /// <returns>Nombre de points du coup</returns>
-        public int PoserMot(string mot, int x, int y, char rot, Dictionnaire dico, List<string> out_mots_crees = null)
+        public int PoserMot(string mot, int x, int y, char rot, Dictionnaire dico,
+            List<Jeton> out_jetons_utilises = null, List<string> out_mots_crees = null)
         {
+            List<Jeton> jetons_utilises = new List<Jeton> { };
             List<string> mots_crees = new List<string> { };
             int score = 0;
 
-            if(!this.TesterMot(mot, x, y, rot, dico, mots_crees))
+            if(!this.TesterMot(mot, x, y, rot, dico, jetons_utilises, mots_crees))
                 return -1;
 
             switch(rot)
             {
-                case HORIZONTAL:
-                    for(int i = 0; i < mot.Length; i++)
-                        this.jetons[x, y + i] = new Jeton(mot[i]);
-                    break;
                 case VERTICAL:
-                    for(int i = 0; i < mot.Length; i++)
-                        this.jetons[x + i, y] = new Jeton(mot[i]);
+                    Jeton[,] temp_jetons = new Jeton[15,15];
+                    for(int x_ = 0; x_ < 15; x_++)
+                        for(int y_ = 0; y_ < 15; y_++)
+                            temp_jetons[x_, y_] = this.jetons[y_, x_];
+                    this.jetons = temp_jetons;
+
+                    char[,] temp_poids = new char[15,15];
+                    for(int x_ = 0; x_ < 15; x_++)
+                        for(int y_ = 0; y_ < 15; y_++)
+                            temp_poids[x_, y_] = this.poids[y_, x_];
+                    this.poids = temp_poids;
+
+                    int temp = x;
+                    x = y;
+                    y = temp;
                     break;
+                case HORIZONTAL:
+                    break;
+                default:
+                    return -1;
             }
 
             int score_mot;
             int mult_mot;
             int k;
+            bool[] nouveaux = new bool[mot.Length];
+
+            for(int i = 0; i < mot.Length; i++)
+            {
+                int y_ = y + i;
+                nouveaux[i] = this.jetons[x, y_] == null;
+                if(this.jetons[x, y_] != null)
+                    continue;
+
+                this.jetons[x, y_] = new Jeton(mot[i]);
+                if(!((x - 1 >= 0 && this.jetons[x - 1, y_] != null)
+                    || (x + 1 < 15 && this.jetons[x + 1, y_] != null)))
+                    continue;
+
+                score_mot = 0;
+                mult_mot = 1;
+                int n = -1;
+                while(x + n >= 0 && this.jetons[x + n, y_] != null)
+                {
+                    switch(this.poids[x + n, y_])
+                    {
+                        case LETTRE_DOUBLE:
+                            score_mot += this.jetons[x + n, y_].Valeur * 2;
+                            break;
+                        case LETTRE_TRIPLE:
+                            score_mot += this.jetons[x + n, y_].Valeur * 3;
+                            break;
+                        case MOT_DOUBLE:
+                            mult_mot = Math.Max(mult_mot, 2);
+                            continue;
+                        case MOT_TRIPLE:
+                            mult_mot = Math.Max(mult_mot, 3);
+                            continue;
+                        default:
+                            score_mot += this.jetons[x + n, y_].Valeur;
+                            break;
+                    }
+                    n--;
+                }
+                n = 0;
+                while(y + n < 15 && this.jetons[x + n, y_] != null)
+                {
+                    switch(this.poids[x + n, y_])
+                    {
+                        case LETTRE_DOUBLE:
+                            score_mot += this.jetons[x + n, y_].Valeur * 2;
+                            break;
+                        case LETTRE_TRIPLE:
+                            score_mot += this.jetons[x + n, y_].Valeur * 3;
+                            break;
+                        case MOT_DOUBLE:
+                            mult_mot = Math.Max(mult_mot, 2);
+                            continue;
+                        case MOT_TRIPLE:
+                            mult_mot = Math.Max(mult_mot, 3);
+                            continue;
+                        default:
+                            score_mot += this.jetons[x + n, y_].Valeur;
+                            break;
+                    }
+                    n++;
+                }
+                score += score_mot * mult_mot;
+            }
+
+            score_mot = 0;
+            mult_mot = 1;
+            k = -1;
+            while(y + k >= 0 && this.jetons[x, y + k] != null)
+            {
+                score_mot += this.jetons[x, y + k].Valeur;
+                k--;
+            }
+            k = 0;
+            while(y + k < 15 && this.jetons[x, y + k] != null)
+            {
+                if((k < nouveaux.Length && !nouveaux[k]) || k > mot.Length)
+                    score_mot += this.jetons[x, y + k].Valeur;
+                else
+                    switch(this.poids[x, y + k])
+                    {
+                        case LETTRE_DOUBLE:
+                            score_mot += this.jetons[x, y + k].Valeur * 2;
+                            break;
+                        case LETTRE_TRIPLE:
+                            score_mot += this.jetons[x, y + k].Valeur * 3;
+                            break;
+                        case MOT_DOUBLE:
+                            mult_mot = Math.Max(mult_mot, 2);
+                            score_mot += this.jetons[x, y + k].Valeur;
+                            break;
+                        case MOT_TRIPLE:
+                            mult_mot = Math.Max(mult_mot, 3);
+                            score_mot += this.jetons[x, y + k].Valeur;
+                            break;
+                        default:
+                            score_mot += this.jetons[x, y + k].Valeur;
+                            break;
+                    }
+                k++;
+            }
+            score += score_mot * mult_mot;
+
+            
             switch(rot)
             {
-                case HORIZONTAL:
-                    score_mot = 0;
-                    mult_mot = 1;
-                    k = -1;
-                    while(y + k >= 0 && this.jetons[x, y + k] != null)
-                    {
-                        switch(this.poids[x, y + k])
-                        {
-                            case LETTRE_DOUBLE:
-                                score_mot += this.jetons[x, y + k].Valeur * 2;
-                                break;
-                            case LETTRE_TRIPLE:
-                                score_mot += this.jetons[x, y + k].Valeur * 3;
-                                break;
-                            case MOT_DOUBLE:
-                                mult_mot = Math.Max(mult_mot, 2);
-                                continue;
-                            case MOT_TRIPLE:
-                                mult_mot = Math.Max(mult_mot, 3);
-                                continue;
-                            default:
-                                score_mot += this.jetons[x, y + k].Valeur;
-                                break;
-                        }
-                        k--;
-                    }
-                    k = 0;
-                    while(y + k < 15 && this.jetons[x, y + k] != null)
-                    {
-                        switch(this.poids[x, y + k])
-                        {
-                            case LETTRE_DOUBLE:
-                                score_mot += this.jetons[x, y + k].Valeur * 2;
-                                break;
-                            case LETTRE_TRIPLE:
-                                score_mot += this.jetons[x, y + k].Valeur * 3;
-                                break;
-                            case MOT_DOUBLE:
-                                mult_mot = Math.Max(mult_mot, 2);
-                                continue;
-                            case MOT_TRIPLE:
-                                mult_mot = Math.Max(mult_mot, 3);
-                                continue;
-                            default:
-                                score_mot += this.jetons[x, y + k].Valeur;
-                                break;
-                        }
-                        k++;
-                    }
-                    score += score_mot * mult_mot;
-
-                    for(int i = 0; i < mot.Length; i++)
-                    {
-                        int y_ = y + i;
-                        score_mot = 0;
-                        mult_mot = 1;
-                        int n = -1;
-                        while(x + n >= 0 && this.jetons[x + n, y_] != null)
-                        {
-                            switch(this.poids[x + n, y_])
-                            {
-                                case LETTRE_DOUBLE:
-                                    score_mot += this.jetons[x + n, y_].Valeur * 2;
-                                    break;
-                                case LETTRE_TRIPLE:
-                                    score_mot += this.jetons[x + n, y_].Valeur * 3;
-                                    break;
-                                case MOT_DOUBLE:
-                                    mult_mot = Math.Max(mult_mot, 2);
-                                    continue;
-                                case MOT_TRIPLE:
-                                    mult_mot = Math.Max(mult_mot, 3);
-                                    continue;
-                                default:
-                                    score_mot += this.jetons[x + n, y_].Valeur;
-                                    break;
-                            }
-                            n--;
-                        }
-                        n = 0;
-                        while(y + n < 15 && this.jetons[x + n, y_] != null)
-                        {
-                            switch(this.poids[x + n, y_])
-                            {
-                                case LETTRE_DOUBLE:
-                                    score_mot += this.jetons[x + n, y_].Valeur * 2;
-                                    break;
-                                case LETTRE_TRIPLE:
-                                    score_mot += this.jetons[x + n, y_].Valeur * 3;
-                                    break;
-                                case MOT_DOUBLE:
-                                    mult_mot = Math.Max(mult_mot, 2);
-                                    continue;
-                                case MOT_TRIPLE:
-                                    mult_mot = Math.Max(mult_mot, 3);
-                                    continue;
-                                default:
-                                    score_mot += this.jetons[x + n, y_].Valeur;
-                                    break;
-                            }
-                            n++;
-                        }
-                        score += score_mot * mult_mot;
-                    }
-                    break;
-
                 case VERTICAL:
-                    score_mot = 0;
-                    mult_mot = 1;
-                    k = -1;
-                    while(x + k >= 0 && this.jetons[x + k, y] != null)
-                    {
-                        switch(this.poids[x + k, y])
-                        {
-                            case LETTRE_DOUBLE:
-                                score_mot += this.jetons[x + k, y].Valeur * 2;
-                                break;
-                            case LETTRE_TRIPLE:
-                                score_mot += this.jetons[x + k, y].Valeur * 3;
-                                break;
-                            case MOT_DOUBLE:
-                                mult_mot = Math.Max(mult_mot, 2);
-                                continue;
-                            case MOT_TRIPLE:
-                                mult_mot = Math.Max(mult_mot, 3);
-                                continue;
-                            default:
-                                score_mot += this.jetons[x + k, y].Valeur;
-                                break;
-                        }
-                        k--;
-                    }
-                    k = 0;
-                    while(x + k < 15 && this.jetons[x + k, y] != null)
-                    {
-                        switch(this.poids[x + k, y])
-                        {
-                            case LETTRE_DOUBLE:
-                                score_mot += this.jetons[x + k, y].Valeur * 2;
-                                break;
-                            case LETTRE_TRIPLE:
-                                score_mot += this.jetons[x + k, y].Valeur * 3;
-                                break;
-                            case MOT_DOUBLE:
-                                mult_mot = Math.Max(mult_mot, 2);
-                                continue;
-                            case MOT_TRIPLE:
-                                mult_mot = Math.Max(mult_mot, 3);
-                                continue;
-                            default:
-                                score_mot += this.jetons[x + k, y].Valeur;
-                                break;
-                        }
-                        k++;
-                    }
-                    score += score_mot * mult_mot;
+                    Jeton[,] temp_jetons = new Jeton[15,15];
+                    for(int x_ = 0; x_ < 15; x_++)
+                        for(int y_ = 0; y_ < 15; y_++)
+                            temp_jetons[x_, y_] = this.jetons[y_, x_];
+                    this.jetons = temp_jetons;
 
-                    for(int i = 0; i < mot.Length; i++)
-                    {
-                        int x_ = x + i;
-                        score_mot = 0;
-                        mult_mot = 1;
-                        int n = -1;
-                        while(y + n >= 0 && this.jetons[x_, y + n] != null)
-                        {
-                            switch(this.poids[x_, y + n])
-                            {
-                                case LETTRE_DOUBLE:
-                                    score_mot += this.jetons[x_, y + n].Valeur * 2;
-                                    break;
-                                case LETTRE_TRIPLE:
-                                    score_mot += this.jetons[x_, y + n].Valeur * 3;
-                                    break;
-                                case MOT_DOUBLE:
-                                    mult_mot = Math.Max(mult_mot, 2);
-                                    continue;
-                                case MOT_TRIPLE:
-                                    mult_mot = Math.Max(mult_mot, 3);
-                                    continue;
-                                default:
-                                    score_mot += this.jetons[x_, y + n].Valeur;
-                                    break;
-                            }
-                            n--;
-                        }
-                        n = 0;
-                        while(y + n < 15 && this.jetons[x_, y + n] != null)
-                        {
-                            switch(this.poids[x_, y + n])
-                            {
-                                case LETTRE_DOUBLE:
-                                    score_mot += this.jetons[x_, y + n].Valeur * 2;
-                                    break;
-                                case LETTRE_TRIPLE:
-                                    score_mot += this.jetons[x_, y + n].Valeur * 3;
-                                    break;
-                                case MOT_DOUBLE:
-                                    mult_mot = Math.Max(mult_mot, 2);
-                                    continue;
-                                case MOT_TRIPLE:
-                                    mult_mot = Math.Max(mult_mot, 3);
-                                    continue;
-                                default:
-                                    score_mot += this.jetons[x_, y + n].Valeur;
-                                    break;
-                            }
-                            n++;
-                        }
-                        score += score_mot * mult_mot;
-                    }
+                    char[,] temp_poids = new char[15,15];
+                    for(int x_ = 0; x_ < 15; x_++)
+                        for(int y_ = 0; y_ < 15; y_++)
+                            temp_poids[x_, y_] = this.poids[y_, x_];
+                    this.poids = temp_poids;
+
+                    int temp = x;
+                    x = y;
+                    y = temp;
                     break;
+                case HORIZONTAL:
+                    break;
+                default:
+                    return -1;
             }
+
+            if(jetons_utilises.Count == 0)
+                return -1;
+
+            if(out_jetons_utilises != null)
+                out_jetons_utilises.AddRange(jetons_utilises);
+            if(out_mots_crees != null)
+                out_mots_crees.AddRange(mots_crees);
 
             return score;
         }
@@ -664,9 +574,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
                             file.Write("_\n");
                     else
                         if(jeton != null)
-                            file.Write(jeton.Lettre + ";");
-                        else
-                            file.Write("_;");
+                        file.Write(jeton.Lettre + ";");
+                    else
+                        file.Write("_;");
             }
         }
     }
