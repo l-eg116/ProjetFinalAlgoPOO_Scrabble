@@ -146,7 +146,19 @@ namespace ProjetFinalAlgoPOO_Scrabble
         }
         public void Afficher()
         {
-            Console.WriteLine()
+            Console.Write(nom + "\nScore : " + score + "\nJetons en main : " );
+            if(main_courante != null && main_courante.Count > 0)
+            {
+                for (int i = 0; i < main_courante.Count - 1; i++)
+                {
+                    Console.Write(main_courante[i] + "; ");
+                }
+                Console.WriteLine(main_courante[main_courante.Count - 1]);
+            }
+            else
+            {
+                Console.WriteLine("");
+            }
         }
         /// <summary>
         /// Permet de rajouter un jeton dans la main courante du joueur
