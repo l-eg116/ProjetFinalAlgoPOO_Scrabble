@@ -199,6 +199,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     if(jetons[i,j] != null)
                     {
                         Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
                         Console.Write(" " + jetons[i, j].Lettre + " ");
                         Console.ResetColor();
                     }

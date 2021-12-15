@@ -13,7 +13,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
         public static void Main_()
         {
-            Plateau plat = new Plateau();
+            Plateau plat = new Plateau(@"C:\Users\33782\Source\Repos\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau.txt");
             plat.Afficher();
             Plateau.AfficherLegende();
             Console.WriteLine("\nCombien de joueurs vont jouer (2 à 4 joueurs) ?");
@@ -32,6 +32,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 joueurs.Add(new Joueur(nom: nomjoueur, score: 0));
                 
                 }
+            Console.Clear();
             plat.Afficher();
             Plateau.AfficherLegende();
 
