@@ -11,7 +11,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         private Dictionnaire dictionnaire;
 
 
-        static void Main(string[] args)
+        static void Main_(string[] args)
         {
             Plateau plat = new Plateau(@"C:\Users\33782\Source\Repos\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau.txt");
             plat.Afficher();

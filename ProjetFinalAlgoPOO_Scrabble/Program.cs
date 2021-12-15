@@ -7,7 +7,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         static void Main()
         {
+            SacJetons sac = new SacJetons(@"C:\Users\legco\Source\Repos\l-eg116\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Sauvegarde_SacJetons.csv");
 
+            sac.Sauvegarder(@"C:\Users\legco\Source\Repos\l-eg116\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ProjetFinalAlgoPOO_Scrabble
 {
@@ -90,6 +91,17 @@ namespace ProjetFinalAlgoPOO_Scrabble
         public Jeton Retire_Jeton()
         {
             return this.Piocher();
+        }
+
+        public void Sauvegarder(string folder, string file_name = "Sauvegarde_SacJetons.csv")
+        {
+            string path = System.IO.Path.Combine(folder, file_name);
+
+            using(StreamWriter file = new StreamWriter(path))
+            {
+                foreach(Jeton jeton in sac)
+                    file.WriteLine($"{jeton.Lettre};{jeton.Valeur};1");
+            }
         }
     }
 }
