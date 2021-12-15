@@ -11,9 +11,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
         private Dictionnaire dictionnaire;
 
 
-        static void Main_(string[] args)
+        public static void Main_()
         {
-            Plateau plat = new Plateau(@"C:\Users\33782\Source\Repos\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau.txt");
+            Plateau plat = new Plateau();
             plat.Afficher();
             Plateau.AfficherLegende();
             Console.WriteLine("\nCombien de joueurs vont jouer (2 à 4 joueurs) ?");
