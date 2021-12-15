@@ -49,7 +49,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 Joueur.Afficher();
                 Console.WriteLine("Que voulez-vous faire ? \n-Tapez 1 pour remplacer un de vos jetons\n-Tapez 2 pour placer horizontalement un mot\n-Tapez 3 pour placer un mot verticalement\n-Tapez 4 pour passer votre tour");
                 int choix = Convert.ToInt32(Console.ReadLine());
-                switch(choix)
+                switch (choix)// PAS OUBLIER DE RAJOUTER UN TIMER (je vais me renseigner)
                 {
                     case 1:
                         //Remplacer un jeton
@@ -67,11 +67,40 @@ namespace ProjetFinalAlgoPOO_Scrabble
                         break;
                 }
             }
+            for (int i = 1; i <= nombrejoueurs; i++)
+            {
+                Console.Clear();
+                plateau.Afficher();
+                Plateau.AfficherLegende();
+                if (compteur > nombrejoueurs)
+                {
+                    compteur -= nombrejoueurs;
+                }
+                Console.WriteLine("\nATTENTION DERNIER TOUR\nC'est le tour du joueur numéro " + compteur + " : " + nomjoueur.joueurs(compteur));//pour marquer le nom du joueur :/
+                Console.WriteLine(sac_jetons.Count);
+                Joueur.Afficher();
+                Console.WriteLine("Que voulez-vous faire ?\n-Tapez 1 pour passer votre tour \n-Tapez 2 pour placer horizontalement un mot\n-Tapez 3 pour placer un mot verticalement");
+                int choix = Convert.ToInt32(Console.ReadLine());
+                switch (choix)
+                {
+                    case 1:
+                        break;
 
+                    case 2:
+                        //Placer un mot horizontalement
+                        break;
 
+                    case 3:
+                        //Placer un mot verticalement
+                        break;
+                }
+            }
+            Console.Clear();
+            Console.WriteLine("SCORES FINAUX\n");
+            for(int i = 0; i < nombrejoueurs; i++)
+            {
+                Console.WriteLine(nomjoueur.joueurs(i) + " : " + score.joueurs + " points");
+            }
         }
-
-
-
     }
 }
