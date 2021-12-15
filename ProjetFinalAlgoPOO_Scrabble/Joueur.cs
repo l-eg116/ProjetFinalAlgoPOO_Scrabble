@@ -142,7 +142,6 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 }
                 phrase += main_courante[main_courante.Count - 1] + "\n";
             }
-
             return phrase;
         }
 
