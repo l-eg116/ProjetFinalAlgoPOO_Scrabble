@@ -35,8 +35,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 //Remplir les mains des joueurs ici
             }
             int compteur = 1;
+            System.TimeSpan duration = new System.TimeSpan(0, 0, 6, 0);
             while (sac_jetons.Count(new SacJetons()) < 0) //petit probleme pour le décompte des jetons restants
             {
+                DateTime heure_début = DateTime.Now;
                 Console.Clear();
                 plateau.Afficher();
                 Plateau.AfficherLegende();
@@ -66,9 +68,16 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     case 4:
                         break;
                 }
+                DateTime heure_fin = DateTime.Now;
+                if(heure_fin - heure_début > duration)
+                {
+                    Console.WriteLine("Temps écoulé, vous pourrez rejouer au prochain tour");
+                    continue;
+                }
             }
             for (int i = 1; i <= nombrejoueurs; i++)
             {
+                DateTime heure_début = DateTime.Now;
                 Console.Clear();
                 plateau.Afficher();
                 Plateau.AfficherLegende();
@@ -93,6 +102,12 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     case 3:
                         //Placer un mot verticalement
                         break;
+                }
+                DateTime heure_fin = DateTime.Now;
+                if (heure_fin - heure_début > duration)
+                {
+                    Console.WriteLine("Temps écoulé, vous avez passé votre chance, vous pourrez rejouer lors d'une autre partie");
+                    continue;
                 }
             }
             Console.Clear();
