@@ -7,10 +7,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         static void Main(string[] args)
         {
-            Plateau plat = new Plateau();
+            Plateau plat = new Plateau(@"C:\Users\33782\Source\Repos\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau.txt");
             plat.Afficher();
             Plateau.AfficherLegende();
-            Console.WriteLine("Combien de joueurs vont jouer (2 à 4 joueurs) ?");
+            Console.WriteLine("\nCombien de joueurs vont jouer (2 à 4 joueurs) ?");
             int nombrejoueurs = Convert.ToInt32(Console.ReadLine());
             switch (nombrejoueurs)
             {
@@ -28,48 +28,63 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     break;
                 
             }
+            Console.Clear();
+            plat.Afficher();
+            Plateau.AfficherLegende();
+            
+
+
         }
         static void DeuxJoueurs()
         {
             Console.WriteLine("Nom du premier joueur : ");
             string nomjoueur1 = Console.ReadLine();
             Joueur joueur1 = new Joueur(nomjoueur1);
+            joueur1.ToString();
 
             Console.WriteLine("\nNom du second joueur : ");
             string nomjoueur2 = Console.ReadLine();
-            Joueur joueur2 = new Joueur(nomjoueur1);
+            Joueur joueur2 = new Joueur(nomjoueur2);
+            joueur2.ToString();
         }
         static void TroisJoueurs()
         {
             Console.WriteLine("Nom du premier joueur : ");
             string nomjoueur1 = Console.ReadLine();
             Joueur joueur1 = new Joueur(nomjoueur1);
+            joueur1.ToString();
 
             Console.WriteLine("Nom du deuxième joueur : ");
             string nomjoueur2 = Console.ReadLine();
-            Joueur joueur2 = new Joueur(nomjoueur1);
+            Joueur joueur2 = new Joueur(nomjoueur2);
+            joueur2.ToString();
 
             Console.WriteLine("Nom du troisième joueur : ");
             string nomjoueur3 = Console.ReadLine();
-            Joueur joueur3 = new Joueur(nomjoueur1);
+            Joueur joueur3 = new Joueur(nomjoueur3);
+            joueur3.ToString();
         }
         static void QuatreJoueurs()
         {
             Console.WriteLine("Nom du premier joueur : ");
             string nomjoueur1 = Console.ReadLine();
             Joueur joueur1 = new Joueur(nomjoueur1);
+            joueur1.ToString();
 
             Console.WriteLine("Nom du deuxième joueur : ");
             string nomjoueur2 = Console.ReadLine();
-            Joueur joueur2 = new Joueur(nomjoueur1);
+            Joueur joueur2 = new Joueur(nomjoueur2);
+            joueur2.ToString();
 
             Console.WriteLine("Nom du troisième joueur : ");
             string nomjoueur3 = Console.ReadLine();
-            Joueur joueur3 = new Joueur(nomjoueur1);
+            Joueur joueur3 = new Joueur(nomjoueur3);
+            joueur3.ToString();
 
             Console.WriteLine("Nom du quatrième joueur : ");
             string nomjoueur4 = Console.ReadLine();
-            Joueur joueur4 = new Joueur(nomjoueur1);
+            Joueur joueur4 = new Joueur(nomjoueur4);
+            joueur4.ToString();
         }
     }
 }
