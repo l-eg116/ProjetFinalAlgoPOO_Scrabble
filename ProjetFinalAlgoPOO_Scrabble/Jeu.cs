@@ -19,6 +19,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
             Plateau.AfficherLegende();
             Console.WriteLine("\nCombien de joueurs vont jouer (2 à 4 joueurs) ?");
             int nombrejoueurs = Convert.ToInt32(Console.ReadLine());
+            string nomjoueur = " ";
             for(int i = 1; i <= nombrejoueurs; i++)
             {
                 if(i == 1)
@@ -29,13 +30,23 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 {
                     Console.WriteLine("Nom du " + i + "eme joueur : ");
                 }
-                string nomjoueur = Console.ReadLine();
+                nomjoueur = Console.ReadLine();
                 joueurs.Add(new Joueur(nom: nomjoueur, score: 0));
+                //Remplir les mains des joueurs ici
             }
-            Console.Clear();
-            plateau.Afficher();
-            Plateau.AfficherLegende();
-
+            int compteur = 1;
+            while(sac_jetons.Count(new SacJetons()) < 0) //petit probleme pour le décompte des jetons restants
+            {
+                Console.Clear();
+                plateau.Afficher();
+                Plateau.AfficherLegende();
+                if (compteur > nombrejoueurs)
+                {
+                    compteur -= nombrejoueurs;
+                }
+                Console.WriteLine("\nC'est le tour du joueur numéro " + compteur + " : " + nomjoueur.joueurs(compteur));//pour marquer le nom du joueur :/
+                Joueur.Afficher();
+            }
 
 
         }
