@@ -13,14 +13,15 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
         public static void Main_()
         {
-            Plateau plat = new Plateau(@"C:\Users\33782\Source\Repos\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau.txt");
-            plat.Afficher();
+
+            Plateau plateau = new Plateau(@"C:\Users\33782\Source\Repos\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau.txt");
+            plateau.Afficher();
             Plateau.AfficherLegende();
             Console.WriteLine("\nCombien de joueurs vont jouer (2 à 4 joueurs) ?");
             int nombrejoueurs = Convert.ToInt32(Console.ReadLine());
-            for(int i = 1; i <= nombrejoueurs; i++)
+            for (int i = 1; i <= nombrejoueurs; i++)
             {
-                if(i == 1)
+                if (i == 1)
                 {
                     Console.WriteLine("Nom du " + i + "er joueur : ");
                 }
@@ -30,11 +31,16 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 }
                 string nomjoueur = Console.ReadLine();
                 joueurs.Add(new Joueur(nom: nomjoueur, score: 0));
-
             }
+            Console.Clear();
             plateau.Afficher();
             Plateau.AfficherLegende();
 
+
+
         }
-    }
+
+
+        
+}
 }
