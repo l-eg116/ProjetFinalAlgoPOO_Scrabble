@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ProjetFinalAlgoPOO_Scrabble
 {
@@ -603,6 +604,27 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
 
             return score;
+        }
+
+        public void SauvegarderJetons(string folder, string file_name = "Sauvegarde_Jetons.csv")
+        {
+            string path = System.IO.Path.Combine(folder, file_name);
+
+            using(StreamWriter file = new StreamWriter(path))
+            {
+                int i = 1;
+                foreach(Jeton jeton in this.jetons)
+                    if(i++ % 15 == 0)
+                        if(jeton != null)
+                            file.Write(jeton.Lettre + "\n");
+                        else
+                            file.Write("_\n");
+                    else
+                        if(jeton != null)
+                            file.Write(jeton.Lettre + ";");
+                        else
+                            file.Write("_;");
+            }
         }
     }
 }
