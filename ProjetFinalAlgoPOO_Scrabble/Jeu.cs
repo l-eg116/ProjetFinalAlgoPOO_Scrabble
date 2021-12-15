@@ -19,9 +19,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
             Plateau.AfficherLegende();
             Console.WriteLine("\nCombien de joueurs vont jouer (2 à 4 joueurs) ?");
             int nombrejoueurs = Convert.ToInt32(Console.ReadLine());
-            for (int i = 1; i <= nombrejoueurs; i++)
+            for(int i = 1; i <= nombrejoueurs; i++)
             {
-                if (i == 1)
+                if(i == 1)
                 {
                     Console.WriteLine("Nom du " + i + "er joueur : ");
                 }
@@ -41,6 +41,6 @@ namespace ProjetFinalAlgoPOO_Scrabble
         }
 
 
-        
-}
+
+    }
 }

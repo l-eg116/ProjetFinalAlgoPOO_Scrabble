@@ -164,6 +164,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         /// Permet de rajouter un jeton dans la main courante du joueur
         /// </summary>
         /// <param name="monjeton">Jeton à rajouter dans la main courante du joueur</param>
+        
         public void DonnerJeton(Jeton monjeton)
         {
             this.main_courante.Add(monjeton);
@@ -175,6 +176,12 @@ namespace ProjetFinalAlgoPOO_Scrabble
         public void Add_Main_Courante(Jeton monjeton)
         {
             this.DonnerJeton(monjeton);
+        }
+
+        public void RemplirMain(SacJetons sac)
+        {
+            while(this.main_courante.Count < 7 && sac.Taille > 0)
+                this.DonnerJeton(sac.Piocher());
         }
 
         /// <summary>

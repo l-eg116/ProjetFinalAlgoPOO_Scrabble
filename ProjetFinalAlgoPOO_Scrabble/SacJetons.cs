@@ -60,7 +60,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
             string return_str = "";
 
             foreach(Jeton jeton in this.sac)
-                return_str += jeton.ToString() + "\t";
+                return_str += jeton.Lettre + " ";
 
             return return_str;
         }
