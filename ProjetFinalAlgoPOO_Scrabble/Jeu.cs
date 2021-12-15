@@ -5,10 +5,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
 {
     class Jeu
     {
-        static private Plateau plateau;
-        static public List<Joueur> joueurs = new List<Joueur> { };
-        static private SacJetons sac_jetons;
-        static private Dictionnaire dictionnaire;
+        static Plateau plateau;
+        static List<Joueur> joueurs = new List<Joueur> { };
+        static SacJetons sac_jetons;
+        static Dictionnaire dictionnaire;
 
 
         public static void Main_()
@@ -20,7 +20,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
             int nombrejoueurs = Convert.ToInt32(Console.ReadLine());
             for(int i = 1; i <= nombrejoueurs; i++)
             {
-                if (i == 1)
+                if(i == 1)
                 {
                     Console.WriteLine("Nom du " + i + "er joueur : ");
                 }
@@ -30,10 +30,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 }
                 string nomjoueur = Console.ReadLine();
                 joueurs.Add(new Joueur(nom: nomjoueur, score: 0));
-                
-                }
-            Console.Clear();
-            plat.Afficher();
+
+            }
+            plateau.Afficher();
             Plateau.AfficherLegende();
 
         }
