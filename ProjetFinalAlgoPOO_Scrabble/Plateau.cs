@@ -247,6 +247,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
             Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine(" : AUCUN BONUS");
         }
+
         public bool TesterMot(string mot, int x, int y, char rot, Dictionnaire dico, List<string> out_mots_crees = null)
         {
             mot = Dictionnaire.RemoveDiacritics(mot.ToUpper());

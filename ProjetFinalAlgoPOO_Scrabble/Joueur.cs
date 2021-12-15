@@ -144,7 +144,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
             return phrase;
         }
-
+        public void Afficher()
+        {
+            Console.WriteLine()
+        }
         /// <summary>
         /// Permet de rajouter un jeton dans la main courante du joueur
         /// </summary>

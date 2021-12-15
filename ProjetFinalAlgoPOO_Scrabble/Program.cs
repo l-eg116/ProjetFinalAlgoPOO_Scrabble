@@ -28,7 +28,6 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     break;
                 
             }
-            Console.Clear();
             plat.Afficher();
             Plateau.AfficherLegende();
             
@@ -39,13 +38,15 @@ namespace ProjetFinalAlgoPOO_Scrabble
         {
             Console.WriteLine("Nom du premier joueur : ");
             string nomjoueur1 = Console.ReadLine();
-            Joueur joueur1 = new Joueur(nomjoueur1);
-            joueur1.ToString();
+            int score = 0;
+            Joueur joueur1 = new Joueur(nomjoueur1, score );
+            Console.WriteLine(joueur1.ToString());
 
             Console.WriteLine("\nNom du second joueur : ");
             string nomjoueur2 = Console.ReadLine();
-            Joueur joueur2 = new Joueur(nomjoueur2);
-            joueur2.ToString();
+            int score2 = 0;
+            Joueur joueur2 = new Joueur(nomjoueur2,score2);
+            Console.WriteLine(joueur2.ToString());
         }
         static void TroisJoueurs()
         {
