@@ -5,5 +5,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
 {
     class Program
     {
+        static void Main()
+        {
+
+        }
     }
 }
