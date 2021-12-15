@@ -146,7 +146,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         }
         public void Afficher()
         {
-            Console.Write(nom + "\nScore : " + score + "\nJetons en main : " );
+            Console.Write( "\n-Score : " + score + "\n-Jetons en main : " );
             if(main_courante != null && main_courante.Count > 0)
             {
                 for (int i = 0; i < main_courante.Count - 1; i++)
@@ -157,7 +157,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
             else
             {
-                Console.WriteLine("");
+                Console.WriteLine("RIEN ");
             }
         }
         /// <summary>

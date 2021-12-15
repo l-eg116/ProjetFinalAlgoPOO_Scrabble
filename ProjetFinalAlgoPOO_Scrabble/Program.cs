@@ -7,7 +7,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
     {
         static void Main()
         {
-            
+            Jeu.Main_();
         }
     }
 }
