@@ -20,15 +20,24 @@ namespace ProjetFinalAlgoPOO_Scrabble
         public const char HORIZONTAL = 'H';
         public const char VERTICAL = 'V';
 
+        /// <summary>
+        /// Matrice des poids du plateau
+        /// </summary>
         public char[,] Poids
         {
             get { return this.poids; }
         }
+        /// <summary>
+        /// Matrice des jetons du plateau
+        /// </summary>
         public Jeton[,] Jetons
         {
             get { return this.jetons; }
         }
 
+        /// <summary>
+        /// Initialise un nouveau plateau sans jetons et avec les poids par défault
+        /// </summary>
         public Plateau()
         {
             using(TextFieldParser csvParser = new TextFieldParser("Default_PoidsPlateau.csv"))
@@ -82,6 +91,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
             this.jetons = new Jeton[15, 15];
         }
+        /// <summary>
+        /// Initialise un plateau à partir d'un fichier jetons et d'un fichier poids
+        /// </summary>
+        /// <param name="path_jetons">Chemin du fichier jetons</param>
+        /// <param name="path_poids">Chemin du fichier poids</param>
         public Plateau(string path_jetons, string path_poids = "Default_PoidsPlateau.csv")
         {
             using(TextFieldParser csvParser = new TextFieldParser(path_jetons))
@@ -142,6 +156,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 catch(System.IndexOutOfRangeException) { this.poids = new char[15, 15]; }
             }
         }
+        /// <summary>
+        /// Mets un plateau sous forme de string pour debugage
+        /// </summary>
+        /// <returns>Un string represantant le plateau</returns>
         public override string ToString()
         {
             string return_str = "";
@@ -250,6 +268,16 @@ namespace ProjetFinalAlgoPOO_Scrabble
             Console.WriteLine(" : AUCUN BONUS");
         }
 
+        /// <summary>
+        /// Vérifie si un mot à le droit d'être poser sur le plateau à une certaine position
+        /// </summary>
+        /// <param name="mot">Mot à essayer de poser</param>
+        /// <param name="x">Coordonnée x du début du mot</param>
+        /// <param name="y">Coordonnée y du début du mot</param>
+        /// <param name="rot">Sens du mot ('H'/'V')</param>
+        /// <param name="dico">Dictionnaire dans lequel les mots crées doivent exister</param>
+        /// <param name="out_mots_crees">Liste à laquelle sera rajoutée les mots crées</param>
+        /// <returns>Si le mot peut être posé</returns>
         public bool TesterMot(string mot, int x, int y, char rot, Dictionnaire dico, List<string> out_mots_crees = null)
         {
             mot = Dictionnaire.RemoveDiacritics(mot.ToUpper());
@@ -365,6 +393,16 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
             return true;
         }
+        /// <summary>
+        /// Pose un mot sur le plateau et retourne le nombre de points générés
+        /// </summary>
+        /// <param name="mot">Mot à poser</param>
+        /// <param name="x">Coordonnée x du début du mot</param>
+        /// <param name="y">Coordonnée y du début du mot</param>
+        /// <param name="rot">Sens du mot ('H'/'V')</param>
+        /// <param name="dico">Dictionnaire dans lequel les mots crées doivent exister</param>
+        /// <param name="out_mots_crees">Liste à laquelle sera rajoutée les mots crées</param>
+        /// <returns>Nombre de points du coup</returns>
         public int PoserMot(string mot, int x, int y, char rot, Dictionnaire dico, List<string> out_mots_crees = null)
         {
             List<string> mots_crees = new List<string> { };
@@ -606,6 +644,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
             return score;
         }
 
+        /// <summary>
+        /// Sauvegarde l'instance du plateau dans un fichier
+        /// </summary>
+        /// <param name="folder">Dossier dans lequel le fichier sera créé</param>
+        /// <param name="file_name">Nom du fichier</param>
         public void SauvegarderJetons(string folder, string file_name = "Sauvegarde_Jetons.csv")
         {
             string path = System.IO.Path.Combine(folder, file_name);

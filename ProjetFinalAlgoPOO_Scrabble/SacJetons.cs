@@ -93,6 +93,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
             return this.Piocher();
         }
 
+        /// <summary>
+        /// Sauvegarde l'instance dans un fichier
+        /// </summary>
+        /// <param name="folder">Dossier contenant la sauvegarde</param>
+        /// <param name="file_name">Nom du fichier</param>
         public void Sauvegarder(string folder, string file_name = "Sauvegarde_SacJetons.csv")
         {
             string path = System.IO.Path.Combine(folder, file_name);

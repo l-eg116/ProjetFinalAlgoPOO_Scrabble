@@ -146,6 +146,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
             return phrase;
         }
+        /// <summary>
+        /// Affiche une instance pour la partie
+        /// </summary>
         public void Afficher()
         {
             Console.Write("\n-Score : " + score + "\n-Jetons en main : ");
@@ -162,11 +165,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 Console.WriteLine("RIEN ");
             }
         }
+
         /// <summary>
         /// Permet de rajouter un jeton dans la main courante du joueur
         /// </summary>
         /// <param name="monjeton">Jeton à rajouter dans la main courante du joueur</param>
-
         public void DonnerJeton(Jeton monjeton)
         {
             this.main_courante.Add(monjeton);
@@ -180,6 +183,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
             this.DonnerJeton(monjeton);
         }
 
+        /// <summary>
+        /// Donne des jetons au joueur jusqu'a ce qu'il en ait 7
+        /// </summary>
+        /// <param name="sac">Le sac dans lequel le joueur pioche</param>
         public void RemplirMain(SacJetons sac)
         {
             while(this.main_courante.Count < 7 && sac.Taille > 0)
@@ -210,6 +217,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
             return this.EnleverJeton(monjeton);
         }
 
+        /// <summary>
+        /// Sauvegarde une instance de joueur dans un fichier
+        /// </summary>
+        /// <param name="folder">Dossier contenant la sauvegarde</param>
+        /// <param name="file_name">Nom du fichier</param>
         public void Sauvegarder(string folder, string file_name = "Sauvegarde_Joueur.csv")
         {
             string path = System.IO.Path.Combine(folder, file_name);
