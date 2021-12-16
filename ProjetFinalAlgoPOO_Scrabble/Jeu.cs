@@ -188,7 +188,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                             break;
                         case "/dico":
                             affichage = "";
-                            Console.Write("Mot à charcher >>> ");
+                            Console.Write("Mot à chercher >>> ");
                             if(dictionnaire.Contient(Console.ReadLine()))
                                 Console.WriteLine("\n-> Ce mot est dans le dictionnaire");
                             else
