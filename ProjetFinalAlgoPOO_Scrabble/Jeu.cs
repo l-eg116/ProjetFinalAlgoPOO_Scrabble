@@ -113,7 +113,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     List<Jeton> jetons_utilises = new List<Jeton> { };
                     if(plateau.TesterMot(input, x, y, rot, dictionnaire, jetons_utilises))
                     {
-                        Joueur copie_joueur = joueurs[i_joueur];
+                        Joueur copie_joueur = new Joueur(nom: "temp");
+                        foreach(Jeton jet in joueurs[i_joueur].MainCourante)
+                            copie_joueur.DonnerJeton(jet);
                         bool possible = true;
                         for(int i = 0; i < jetons_utilises.Count && possible; i++)
                             possible &= copie_joueur.EnleverJeton(jetons_utilises[i]) || copie_joueur.EnleverJeton(new Jeton('*'));
