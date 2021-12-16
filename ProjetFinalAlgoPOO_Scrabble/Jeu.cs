@@ -212,11 +212,17 @@ namespace ProjetFinalAlgoPOO_Scrabble
                             Sauvegarder();
                             System.Environment.Exit(0);
                             break;
-                        case "///":
+                        case "//f":
                             Console.Write("[ ? ] >>> ");
                             affichage = " >.> ";
                             foreach(string mot in dictionnaire.MotsPossibles(Console.ReadLine()))
                                 affichage += mot.ToLower() + " ";
+                            break;
+                        case "//p":
+                            Console.Write("[ ?? ] >>> ");
+                            affichage = " >.> ";
+                            foreach(string mot in plateau.TrouverPlace(Console.ReadLine(), dictionnaire))
+                                affichage += mot + "; ";
                             break;
                         default:
                             affichage = "";
