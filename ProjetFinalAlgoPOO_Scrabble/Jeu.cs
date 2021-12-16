@@ -189,10 +189,19 @@ namespace ProjetFinalAlgoPOO_Scrabble
                         case "/dico":
                             affichage = "";
                             Console.Write("Mot à chercher >>> ");
-                            if(dictionnaire.Contient(Console.ReadLine()))
+                            if (dictionnaire.Contient(Console.ReadLine()))
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("\n-> Ce mot est dans le dictionnaire");
+                                Console.ResetColor();
+                            }
                             else
+                            {
+                                Console.ForegroundColor = ConsoleColor.DarkRed;
                                 Console.WriteLine("\n-> Ce mot n'est pas dans le dictionnaire");
+                                Console.ResetColor();
+                            }
+                                
                             Console.WriteLine("Appuyez sur une touche pour continuer...");
                             Console.ReadKey();
                             break;
