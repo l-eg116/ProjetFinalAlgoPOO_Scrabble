@@ -191,17 +191,17 @@ namespace ProjetFinalAlgoPOO_Scrabble
         public void Afficher()
         {
             Console.Write("   ");
-            for(int i = 0; i < 10; i++)
+            for(int i = 1; i < 10; i++)
                 Console.Write($" {i} ");
-            for(int i = 10; i < 15; i++)
+            for(int i = 10; i < 16; i++)
                 Console.Write($" {i}");
             Console.WriteLine();
             for(int i = 0; i < 15; i++)
             {
-                if(i < 10)
-                    Console.Write($" {i} ");
+                if(i + 1 < 10)
+                    Console.Write($" {i + 1} ");
                 else
-                    Console.Write($"{i} ");
+                    Console.Write($"{i + 1} ");
                 for(int j = 0; j < 15; j++)
                 {
                     switch(poids[i, j])
@@ -247,7 +247,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         /// </summary>
         public static void AfficherLegende()
         {
-            Console.WriteLine("\nAvec : \n");
+            //Console.WriteLine("\nAvec : \n");
             Console.BackgroundColor = ConsoleColor.Yellow;
             Console.Write("  ");
             Console.BackgroundColor = ConsoleColor.Black;
@@ -389,6 +389,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
         public int PoserMot(string mot, int x, int y, char rot, Dictionnaire dico,
             List<Jeton> out_jetons_utilises = null, List<string> out_mots_crees = null)
         {
+            mot = Dictionnaire.RemoveDiacritics(mot.ToUpper());
             List<Jeton> jetons_utilises = new List<Jeton> { };
             List<string> mots_crees = new List<string> { };
             int score = 0;
@@ -451,12 +452,15 @@ namespace ProjetFinalAlgoPOO_Scrabble
                         case LETTRE_TRIPLE:
                             score_mot += this.jetons[x + n, y_].Valeur * 3;
                             break;
+                        case CENTRE:
                         case MOT_DOUBLE:
                             mult_mot = Math.Max(mult_mot, 2);
-                            continue;
+                            score_mot += this.jetons[x + n, y_].Valeur;
+                            break;
                         case MOT_TRIPLE:
                             mult_mot = Math.Max(mult_mot, 3);
-                            continue;
+                            score_mot += this.jetons[x + n, y_].Valeur;
+                            break;
                         default:
                             score_mot += this.jetons[x + n, y_].Valeur;
                             break;
@@ -474,12 +478,15 @@ namespace ProjetFinalAlgoPOO_Scrabble
                         case LETTRE_TRIPLE:
                             score_mot += this.jetons[x + n, y_].Valeur * 3;
                             break;
+                        case CENTRE:
                         case MOT_DOUBLE:
                             mult_mot = Math.Max(mult_mot, 2);
-                            continue;
+                            score_mot += this.jetons[x + n, y_].Valeur;
+                            break;
                         case MOT_TRIPLE:
                             mult_mot = Math.Max(mult_mot, 3);
-                            continue;
+                            score_mot += this.jetons[x + n, y_].Valeur;
+                            break;
                         default:
                             score_mot += this.jetons[x + n, y_].Valeur;
                             break;
@@ -511,6 +518,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                         case LETTRE_TRIPLE:
                             score_mot += this.jetons[x, y + k].Valeur * 3;
                             break;
+                        case CENTRE:
                         case MOT_DOUBLE:
                             mult_mot = Math.Max(mult_mot, 2);
                             score_mot += this.jetons[x, y + k].Valeur;
@@ -527,7 +535,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
             score += score_mot * mult_mot;
 
-            
+
             switch(rot)
             {
                 case VERTICAL:

@@ -11,121 +11,207 @@ namespace ProjetFinalAlgoPOO_Scrabble
         static List<Joueur> joueurs = new List<Joueur> { };
         static SacJetons sac_jetons;
         static Dictionnaire dictionnaire;
+        static int tour;
 
         static void Main()
         {
-            ChargerPartie();
-            Sauvegarder();
-            ChargerPartie();
-        }
-        /*
-        public static void Main_()
-        {
-
-            Plateau plateau = new Plateau();
-            plateau.Afficher();
-            Plateau.AfficherLegende();
-            Console.WriteLine("\nCombien de joueurs vont jouer (2 à 4 joueurs) ?");
-            int nombrejoueurs = Convert.ToInt32(Console.ReadLine());
-            string nomjoueur = " ";
-            for(int i = 1; i <= nombrejoueurs; i++)
+            bool ok = false;
+            do
             {
-                if(i == 1)
-                {
-                    Console.WriteLine("Nom du " + i + "er joueur : ");
-                }
-                else
-                {
-                    Console.WriteLine("Nom du " + i + "eme joueur : ");
-                }
-                nomjoueur = Console.ReadLine();
-                joueurs.Add(new Joueur(nom: nomjoueur, score: 0));
-                //Remplir les mains des joueurs ici
-            }
-            int compteur = 1;
-            System.TimeSpan duration = new System.TimeSpan(0, 0, 6, 0);
-            while(sac_jetons.Count(new SacJetons()) < 0) //petit probleme pour le décompte des jetons restants
-            {
-                DateTime heure_début = DateTime.Now;
                 Console.Clear();
-                plateau.Afficher();
-                Plateau.AfficherLegende();
-                if(compteur > nombrejoueurs)
-                {
-                    compteur -= nombrejoueurs;
-                }
-                Console.WriteLine("\nC'est le tour du joueur numéro " + compteur + " : " + nomjoueur.joueurs(compteur));//pour marquer le nom du joueur :/
-                Console.WriteLine(sac_jetons.Count);
-                Joueur.Afficher();
-                Console.WriteLine("Que voulez-vous faire ? \n-Tapez 1 pour remplacer un de vos jetons\n-Tapez 2 pour placer horizontalement un mot\n-Tapez 3 pour placer un mot verticalement\n-Tapez 4 pour passer votre tour");
-                int choix = Convert.ToInt32(Console.ReadLine());
-                switch(choix)// PAS OUBLIER DE RAJOUTER UN TIMER (je vais me renseigner)
-                {
-                    case 1:
-                        //Remplacer un jeton
-                        break;
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" =={ }== Scrabble =={ }== ");
+                Console.ResetColor();
+                Console.WriteLine("\n");
 
-                    case 2:
-                        //Placer un mot horizontalement
-                        break;
+                Console.WriteLine("Bienvenue au Scrabble !\n");
 
-                    case 3:
-                        //Placer un mot verticalement
-                        break;
-
-                    case 4:
-                        break;
-                }
-                DateTime heure_fin = DateTime.Now;
-                if(heure_fin - heure_début > duration)
+                Console.WriteLine("[1] Commencer une nouvelle partie");
+                Console.WriteLine("[2] Charge une partie précédente");
+                switch(Console.ReadKey().Key)
                 {
-                    Console.WriteLine("Temps écoulé, vous pourrez rejouer au prochain tour");
-                    continue;
+                    case ConsoleKey.NumPad1:
+                    case ConsoleKey.D1:
+                        CommencerPartie();
+                        ok = true;
+                        break;
+                    case ConsoleKey.NumPad2:
+                    case ConsoleKey.D2:
+                        ChargerPartie();
+                        ok = true;
+                        break;
+                    case ConsoleKey.Escape:
+                        return;
                 }
-            }
-            for(int i = 1; i <= nombrejoueurs; i++)
+            } while(!ok);
+
+            string affichage = "";
+            while(sac_jetons.Taille > 0)
             {
-                DateTime heure_début = DateTime.Now;
                 Console.Clear();
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write(" =={ }== Scrabble =={ }== ");
+                Console.ResetColor();
+                Console.WriteLine("\n");
                 plateau.Afficher();
-                Plateau.AfficherLegende();
-                if(compteur > nombrejoueurs)
-                {
-                    compteur -= nombrejoueurs;
-                }
-                Console.WriteLine("\nATTENTION DERNIER TOUR\nC'est le tour du joueur numéro " + compteur + " : " + nomjoueur.joueurs(compteur));//pour marquer le nom du joueur :/
-                Console.WriteLine(sac_jetons.Count);
-                Joueur.Afficher();
-                Console.WriteLine("Que voulez-vous faire ?\n-Tapez 1 pour passer votre tour \n-Tapez 2 pour placer horizontalement un mot\n-Tapez 3 pour placer un mot verticalement");
-                int choix = Convert.ToInt32(Console.ReadLine());
-                switch(choix)
-                {
-                    case 1:
-                        break;
+                Console.WriteLine("");
+                int i_joueur = tour % joueurs.Count;
+                joueurs[i_joueur].RemplirMain(sac_jetons);
+                Console.WriteLine($"Tour {tour / joueurs.Count + 1}, {sac_jetons.Taille} jetons restant - Joueur n°{i_joueur + 1} : {joueurs[i_joueur].Nom}, {joueurs[i_joueur].Score} pts");
+                Console.Write("Main >>> ");
+                foreach(Jeton jet in joueurs[i_joueur].MainCourante)
+                    Console.Write($"[{jet.Lettre} | {jet.Valeur}] ");
+                Console.WriteLine("\n");
+                if(affichage != "") Console.WriteLine(affichage + "\n");
 
-                    case 2:
-                        //Placer un mot horizontalement
-                        break;
-
-                    case 3:
-                        //Placer un mot verticalement
-                        break;
-                }
-                DateTime heure_fin = DateTime.Now;
-                if(heure_fin - heure_début > duration)
+                Console.Write("Entrez un mot pour le poser ou tapez '/' pour voir les commandes\n>>> ");
+                string input = Console.ReadLine().ToLower();
+                if(input.Length > 0 && input[0] != '/')
                 {
-                    Console.WriteLine("Temps écoulé, vous avez passé votre chance, vous pourrez rejouer lors d'une autre partie");
-                    continue;
+                    int x = -1, y = -1;
+                    char rot = ' ';
+                    Console.WriteLine("Choisissez la postion du début du mot");
+                    do
+                    {
+                        Console.Write("Ligne >>> ");
+                        try { x = Convert.ToInt32(Console.ReadLine()) - 1; }
+                        catch(System.FormatException) { continue; }
+                    }
+                    while(x < 0 || x >= 15);
+                    do
+                    {
+                        Console.Write("Colonne >>> ");
+                        try { y = Convert.ToInt32(Console.ReadLine()) - 1; }
+                        catch(System.FormatException) { continue; }
+                    }
+                    while(y < 0 || y >= 15);
+                    Console.WriteLine("Choisissez le sens du mot (H/V)");
+                    do
+                        switch(Console.ReadKey().Key)
+                        {
+                            case ConsoleKey.V:
+                                rot = Plateau.VERTICAL;
+                                break;
+                            case ConsoleKey.H:
+                                rot = Plateau.HORIZONTAL;
+                                break;
+                        }
+                    while(rot != Plateau.HORIZONTAL && rot != Plateau.VERTICAL);
+
+                    List<Jeton> jetons_utilises = new List<Jeton> { };
+                    if(plateau.TesterMot(input, x, y, rot, dictionnaire, jetons_utilises))
+                    {
+                        Joueur copie_joueur = joueurs[i_joueur];
+                        bool possible = true;
+                        for(int i = 0; i < jetons_utilises.Count && possible; i++)
+                            possible &= copie_joueur.EnleverJeton(jetons_utilises[i]) || copie_joueur.EnleverJeton(new Jeton('*'));
+                        if(!possible)
+                        {
+                            Console.WriteLine("Vous ne pouvez pas poser ce mot ici !");
+                            Console.WriteLine("\nAppuyez sur une touche pour continuer...");
+                            Console.ReadKey();
+                            continue;
+                        }
+                        else
+                        {
+                            jetons_utilises.Clear();
+                            List<string> mots_crees = new List<string> { };
+                            int score = plateau.PoserMot(input, x, y, rot, dictionnaire, jetons_utilises, mots_crees);
+
+                            for(int i = 0; i < jetons_utilises.Count && possible; i++)
+                                possible &= joueurs[i_joueur].EnleverJeton(jetons_utilises[i]) || joueurs[i_joueur].EnleverJeton(new Jeton('*'));
+                            foreach(string mot in mots_crees)
+                                joueurs[i_joueur].TrouveMot(mot);
+                            joueurs[i_joueur].Score += score;
+
+                            Console.WriteLine($"Vous marquez {score} points !");
+                            Console.Write("Jetons utilisés : ");
+                            foreach(Jeton jet in jetons_utilises)
+                                Console.Write(jet.Lettre + " ");
+                            Console.Write("\nMots trouvés : ");
+                            foreach(string mot in mots_crees)
+                                Console.Write(mot.ToLower() + " ");
+                            tour++;
+                            Console.WriteLine("\n\nAppuyez sur une touche pour continuer...");
+                            Console.ReadKey();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Vous n'avez pas les jetons pour poser ce mot");
+                        Console.WriteLine("\nAppuyez sur une touche pour continuer...");
+                        Console.ReadKey();
+                        continue;
+                    }
                 }
-            }
-            Console.Clear();
-            Console.WriteLine("SCORES FINAUX\n");
-            for(int i = 0; i < nombrejoueurs; i++)
-            {
-                Console.WriteLine(nomjoueur.joueurs(i) + " : " + score.joueurs + " points");
+                else switch(input)
+                    {
+                        case "/":
+                            affichage = "Liste des commandes :"
+                                + "\n'/'             - Voir la liste des commandes"
+                                + "\n'/legende'      - Voir la légende des cases du plateau"
+                                + "\n'/passer'       - Passer son tour"
+                                + "\n'/leaderboard'  - Voir la liste des joueurs et scores"
+                                + "\n'/dico'         - Chercher un mot dans le dictionnaire"
+                                + "\n'/mots'         - Montre les mots que vous avez formés"
+                                + "\n'/sauvegarder'  - Sauvergarder la partie"
+                                + "\n'/quitter'      - Quitter la partie";
+                            break;
+                        case "/legende":
+                            Console.WriteLine();
+                            Plateau.AfficherLegende();
+                            Console.WriteLine("Appuyez sur une touche pour continuer...");
+                            Console.ReadKey();
+                            break;
+                        case "/passer":
+                            affichage = "";
+                            Console.WriteLine("\nVous passez votre tour !\nAppuyez sur une touche pour continuer...");
+                            tour++;
+                            Console.ReadKey();
+                            break;
+                        case "/leaderboard":
+                            affichage = " --- Leaderboard --- ";
+                            foreach(Joueur joueur in joueurs)
+                                affichage += $"\n{joueur.Nom} - {joueur.Score} pts, {joueur.MotTrouves.Count} mots trouvés";
+                            break;
+                        case "/dico":
+                            affichage = "";
+                            Console.Write("Mot à charcher >>> ");
+                            if(dictionnaire.Contient(Console.ReadLine()))
+                                Console.WriteLine("\n-> Ce mot est dans le dictionnaire");
+                            else
+                                Console.WriteLine("\n-> Ce mot n'est pas dans le dictionnaire");
+                            Console.WriteLine("Appuyez sur une touche pour continuer...");
+                            Console.ReadKey();
+                            break;
+                        case "/mots":
+                            affichage = "Mots trouvés : ";
+                            foreach(string mot in joueurs[i_joueur].MotTrouves)
+                                affichage += mot.ToLower() + " ";
+                            break;
+                        case "/sauvegarder":
+                            affichage = "";
+                            Sauvegarder();
+                            break;
+                        case "/quitter":
+                            affichage = "";
+                            Sauvegarder();
+                            System.Environment.Exit(0);
+                            break;
+                        case "///":
+                            Console.Write("[ ? ] >>> ");
+                            affichage = " >.> ";
+                            foreach(string mot in dictionnaire.MotsPossibles(Console.ReadLine()))
+                                affichage += mot.ToLower() + " ";
+                            break;
+                        default:
+                            affichage = "";
+                            break;
+                    }
             }
         }
-        */
 
         static void CommencerPartie()
         {
@@ -208,6 +294,8 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     break;
             }
 
+            tour = 0;
+
             Console.WriteLine("\n => Initialisation terminée, appuyez sur une touche pour lancer la partie <=");
             Console.ReadKey();
         }
@@ -243,6 +331,10 @@ namespace ProjetFinalAlgoPOO_Scrabble
                         {
                             case "DOSSIER":
                                 dossier = fields[1];
+                                break;
+                            case "tour":
+                                tour = Convert.ToInt32(fields[1]);
+                                Console.WriteLine("> Tour chargé !");
                                 break;
                             case "Plateau":
                                 plateau = new Plateau(System.IO.Path.Combine(dossier, fields[1]));
@@ -283,6 +375,8 @@ namespace ProjetFinalAlgoPOO_Scrabble
             {
                 file.WriteLine($"DOSSIER;{folder_path}");
 
+                file.WriteLine($"tour;{tour}");
+
                 file.WriteLine($"Plateau;Sauvegarde_{id}_Plateau.csv");
                 plateau.SauvegarderJetons(folder_path, $"Sauvegarde_{id}_Plateau.csv");
                 Console.WriteLine("> Plateau sauvegardé !");
@@ -300,9 +394,8 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
 
             Console.WriteLine($" Sauvegarde générée sous : {path}");
-            Console.WriteLine(" =>  Appuyez sur une touche pour quitter <= ");
+            Console.WriteLine(" =>  Appuyez sur une touche pour continuer <= ");
             Console.ReadKey();
-            System.Environment.Exit(0);
         }
     }
 }
