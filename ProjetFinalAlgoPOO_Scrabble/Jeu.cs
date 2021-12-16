@@ -62,7 +62,17 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 Console.WriteLine($"Tour {tour / joueurs.Count + 1}, {sac_jetons.Taille} jetons restant - Joueur n°{i_joueur + 1} : {joueurs[i_joueur].Nom}, {joueurs[i_joueur].Score} pts");
                 Console.Write("Main >>> ");
                 foreach(Jeton jet in joueurs[i_joueur].MainCourante)
-                    Console.Write($"[{jet.Lettre} | {jet.Valeur}] ");
+                {
+                    Console.Write("[ ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"{jet.Lettre}");
+                    Console.ResetColor();
+                    Console.Write(" | ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write($"{jet.Valeur} ");
+                    Console.ResetColor();
+                    Console.Write("] ");
+                }
                 Console.WriteLine("\n");
                 if(affichage != "") Console.WriteLine(affichage + "\n");
 
@@ -233,6 +243,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Initialisation des joueurs et des paramètres de la partie
+        /// </summary>
         static void CommencerPartie()
         {
             Console.Clear();
@@ -319,6 +332,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
             Console.WriteLine("\n => Initialisation terminée, appuyez sur une touche pour lancer la partie <=");
             Console.ReadKey();
         }
+        /// <summary>
+        /// Relancer une partie sauvegardée
+        /// </summary>
         static void ChargerPartie()
         {
             Console.Clear();
