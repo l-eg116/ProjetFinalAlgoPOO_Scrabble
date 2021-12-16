@@ -47,7 +47,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
             } while(!ok);
 
             string affichage = "";
-            while(sac_jetons.Taille > 0)
+            while(sac_jetons.Taille > 0 || tour % joueurs.Count != 0)
             {
                 Console.Clear();
                 Console.BackgroundColor = ConsoleColor.White;
@@ -113,7 +113,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     List<Jeton> jetons_utilises = new List<Jeton> { };
                     if(plateau.TesterMot(input, x, y, rot, dictionnaire, jetons_utilises))
                     {
-                        Joueur copie_joueur = joueurs[i_joueur];
+                        Joueur copie_joueur = new Joueur(nom: "temp");
+                        foreach(Jeton jet in joueurs[i_joueur].MainCourante)
+                            copie_joueur.DonnerJeton(jet);
                         bool possible = true;
                         for(int i = 0; i < jetons_utilises.Count && possible; i++)
                             possible &= copie_joueur.EnleverJeton(jetons_utilises[i]) || copie_joueur.EnleverJeton(new Jeton('*'));
@@ -219,11 +221,17 @@ namespace ProjetFinalAlgoPOO_Scrabble
                             Sauvegarder();
                             System.Environment.Exit(0);
                             break;
-                        case "///":
+                        case "//f":
                             Console.Write("[ ? ] >>> ");
                             affichage = " >.> ";
                             foreach(string mot in dictionnaire.MotsPossibles(Console.ReadLine()))
                                 affichage += mot.ToLower() + " ";
+                            break;
+                        case "//p":
+                            Console.Write("[ ?? ] >>> ");
+                            affichage = " >.> ";
+                            foreach(string mot in plateau.TrouverPlace(Console.ReadLine(), dictionnaire))
+                                affichage += mot + "; ";
                             break;
                         default:
                             affichage = "";

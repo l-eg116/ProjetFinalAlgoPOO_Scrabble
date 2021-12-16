@@ -316,7 +316,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     return false;
             }
 
-            if(y + mot.Length > 15)
+            if(x < 0 || x >= 15 || y < 0 || y + mot.Length > 15)
                 return false;
 
             connecte |= (y - 1 >= 0 && temp_jetons[x, y - 1] != null)
@@ -468,7 +468,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     n--;
                 }
                 n = 0;
-                while(y + n < 15 && this.jetons[x + n, y_] != null)
+                while(x + n < 15 && this.jetons[x + n, y_] != null)
                 {
                     switch(this.poids[x + n, y_])
                     {
@@ -570,6 +570,22 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 out_mots_crees.AddRange(mots_crees);
 
             return score;
+        }
+
+        public List<string> TrouverPlace(string mot, Dictionnaire dico)
+        {
+            List<string> positions = new List<string> { };
+
+            for(int x = 0; x < 15 - mot.Length; x++)
+                for(int y = 0; y < 15 - mot.Length; y++)
+                {
+                    if(TesterMot(mot, x, y, HORIZONTAL, dico))
+                        positions.Add($"x: {x + 1}, y: {y + 1}, rot: H");
+                    if(TesterMot(mot, x, y, VERTICAL, dico))
+                        positions.Add($"x: {x + 1}, y: {y + 1}, rot: V");
+                }
+
+            return positions;
         }
 
         /// <summary>
