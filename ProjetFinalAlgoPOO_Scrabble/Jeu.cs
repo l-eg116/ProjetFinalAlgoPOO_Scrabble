@@ -47,7 +47,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
             } while(!ok);
 
             string affichage = "";
-            while(sac_jetons.Taille > 0)
+            while(sac_jetons.Taille > 0 || tour % joueurs.Count != 0)
             {
                 Console.Clear();
                 Console.BackgroundColor = ConsoleColor.White;
