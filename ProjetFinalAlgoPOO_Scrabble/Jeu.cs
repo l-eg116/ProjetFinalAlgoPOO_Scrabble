@@ -211,6 +211,26 @@ namespace ProjetFinalAlgoPOO_Scrabble
                             break;
                     }
             }
+
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write(" =={ }== Scrabble =={ }== ");
+            Console.ResetColor();
+            Console.WriteLine("\n");
+            plateau.Afficher();
+            Console.WriteLine("");
+            Console.WriteLine("Partie terminée ! Merci d'avoir joué !");
+            Console.WriteLine("");
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine(" --- Leaderboard --- ");
+            Console.ResetColor();
+            foreach(Joueur joueur in joueurs)
+                Console.WriteLine($"\n{joueur.Nom} - {joueur.Score} pts, {joueur.MotTrouves.Count} mots trouvés");
+
+            Console.WriteLine("\n\n\nAppuyez sur une touche pour quitter");
+            Console.ReadKey();
         }
 
         static void CommencerPartie()
