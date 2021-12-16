@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -13,8 +14,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
         static void Main()
         {
-            CommencerPartie();
-            Sauvegarder(@"C:\Users\legco\Downloads\New folder");
+            ChargerPartie();
+            Sauvegarder();
+            ChargerPartie();
         }
         /*
         public static void Main_()
@@ -125,8 +127,155 @@ namespace ProjetFinalAlgoPOO_Scrabble
         }
         */
 
-        static void Sauvegarder(string folder_path)
+        static void CommencerPartie()
         {
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write($" === Initialisation des joueurs === ");
+            Console.ResetColor();
+            Console.WriteLine("\n");
+
+            Console.WriteLine("A combien voulez vous jouer ? (Recommandé 2 à 4)");
+            int nombre_joueurs = 0;
+            do
+            {
+                Console.Write(">>> ");
+                try { nombre_joueurs = Convert.ToInt32(Console.ReadLine()); }
+                catch(System.FormatException) { continue; }
+            } while(nombre_joueurs <= 0);
+
+            for(int i = 0; i < nombre_joueurs; i++)
+            {
+                Console.Write($"Nom du joueur n°{i + 1} >>> ");
+                joueurs.Add(new Joueur(nom: Console.ReadLine()));
+            }
+
+            Console.WriteLine("\n => Initialisation des joueurs terminée, appuyez sur une touche pour continuer <=");
+            Console.ReadKey();
+
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"=== Initialisation des constantes ===");
+            Console.ResetColor();
+
+            Console.WriteLine();
+
+            Console.Write("Voulez vous utiliser un dictionnaire particulier ? (y/N)\n>>> ");
+            switch(Console.ReadLine().ToLower())
+            {
+                case "y":
+                case "yes":
+                case "o":
+                case "oui":
+                    Console.Write("Chemin du dictionnaire >>> ");
+                    dictionnaire = new Dictionnaire(Console.ReadLine());
+                    break;
+                default:
+                    Console.WriteLine("=> Utilisation du dictionnaire intégré");
+                    dictionnaire = new Dictionnaire();
+                    break;
+            }
+            Console.Write("Voulez vous utiliser des poids de plateau particuliers ? (y/N)\n>>> ");
+            switch(Console.ReadLine().ToLower())
+            {
+                case "y":
+                case "yes":
+                case "o":
+                case "oui":
+                    Console.Write("Chemin des poids >>> ");
+                    plateau = new Plateau("Default_PlateauVide.csv", Console.ReadLine());
+                    break;
+                default:
+                    Console.WriteLine("=> Utilisation des poids intégrés");
+                    plateau = new Plateau();
+                    break;
+            }
+            Console.Write("Voulez vous utiliser un sac de jetons particulier ? (y/N)\n>>> ");
+            switch(Console.ReadLine().ToLower())
+            {
+                case "y":
+                case "yes":
+                case "o":
+                case "oui":
+                    Console.Write("Chemin du sac de jetons >>> ");
+                    sac_jetons = new SacJetons(Console.ReadLine());
+                    break;
+                default:
+                    Console.WriteLine("=> Utilisation du sac intégré");
+                    sac_jetons = new SacJetons();
+                    break;
+            }
+
+            Console.WriteLine("\n => Initialisation terminée, appuyez sur une touche pour lancer la partie <=");
+            Console.ReadKey();
+        }
+        static void ChargerPartie()
+        {
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write($" === Chargement d'une partie préexistante === ");
+            Console.ResetColor();
+            Console.WriteLine("\n");
+
+            plateau = new Plateau();
+            sac_jetons = new SacJetons();
+            dictionnaire = new Dictionnaire();
+
+            Console.Write("Chemin du fichier SAUVEGARDE_XXXXXX.csv >>> ");
+            string path = Console.ReadLine();
+            Console.WriteLine("");
+
+            using(TextFieldParser csvParser = new TextFieldParser(path))
+            {
+                csvParser.CommentTokens = new string[] { "#" };
+                csvParser.SetDelimiters(new string[] { ",", ";" });
+                csvParser.HasFieldsEnclosedInQuotes = true;
+
+                string dossier = "";
+                while(!csvParser.EndOfData)
+                {
+                    string[] fields = csvParser.ReadFields();
+                    if(fields.Length >= 2)
+                        switch(fields[0])
+                        {
+                            case "DOSSIER":
+                                dossier = fields[1];
+                                break;
+                            case "Plateau":
+                                plateau = new Plateau(System.IO.Path.Combine(dossier, fields[1]));
+                                Console.WriteLine("> Plateau chargé !");
+                                break;
+                            case "SacJetons":
+                                sac_jetons = new SacJetons(System.IO.Path.Combine(dossier, fields[1]));
+                                Console.WriteLine("> SacJetons chargé !");
+                                break;
+                            case "Joueur":
+                                joueurs.Add(new Joueur(path: System.IO.Path.Combine(dossier, fields[1])));
+                                Console.WriteLine("> Joueur chargé !");
+                                break;
+                        }
+                }
+            }
+
+            Console.WriteLine(" => Chargement terminé ! Appuyez sur une touche pour continuer <= ");
+            Console.ReadKey();
+        }
+        static void Sauvegarder()
+        {
+            Console.Clear();
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write($" === Sauvegarde de la partie === ");
+            Console.ResetColor();
+            Console.WriteLine("\n");
+
+
+            Console.Write("Chemin du dossier qui contiendra la sauvegarde >>> ");
+            string folder_path = Console.ReadLine();
+            Console.WriteLine("");
             int id = new Random().Next(999999);
 
             string path = System.IO.Path.Combine(folder_path, $"SAUVEGARDE_{id}.csv");
@@ -136,16 +285,24 @@ namespace ProjetFinalAlgoPOO_Scrabble
 
                 file.WriteLine($"Plateau;Sauvegarde_{id}_Plateau.csv");
                 plateau.SauvegarderJetons(folder_path, $"Sauvegarde_{id}_Plateau.csv");
+                Console.WriteLine("> Plateau sauvegardé !");
 
                 file.WriteLine($"SacJetons;Sauvegarde_{id}_SacJetons.csv");
                 sac_jetons.Sauvegarder(folder_path, $"Sauvegarde_{id}_SacJetons.csv");
+                Console.WriteLine("> SacJetons sauvegardé !");
 
                 for(int i = 0; i < joueurs.Count; i++)
                 {
                     file.WriteLine($"Joueur;Sauvegarde_{id}_Joueur{i}.csv");
                     joueurs[i].Sauvegarder(folder_path, $"Sauvegarde_{id}_Joueur{i}.csv");
+                    Console.WriteLine($"> Joueur_{i} sauvegardé !");
                 }
             }
+
+            Console.WriteLine($" Sauvegarde générée sous : {path}");
+            Console.WriteLine(" =>  Appuyez sur une touche pour quitter <= ");
+            Console.ReadKey();
+            System.Environment.Exit(0);
         }
     }
 }
