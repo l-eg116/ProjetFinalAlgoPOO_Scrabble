@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+// Hugo ROURE et Emile GATIGNON
+// A2-S3 : Algo et POO
+// Decembre 2021
+
 namespace ProjetFinalAlgoPOO_Scrabble
 {
     class Jeu

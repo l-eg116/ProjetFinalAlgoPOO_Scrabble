@@ -1,3 +1,0 @@
-Benjamin;69
-BAT;SEBUM;LEXEMES
-A;B;C;D;E;W;H
