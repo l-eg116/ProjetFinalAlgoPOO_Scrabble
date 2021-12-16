@@ -5,9 +5,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
 {
     class Program
     {
-        static void Main()
+        static void Main_()
         {
-            Jeu.Main_();
+            
         }
     }
 }

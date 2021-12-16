@@ -9,6 +9,9 @@
     <None Update="Default_Dictionnaire.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Default_PlateauVide.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Default_PoidsPlateau.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

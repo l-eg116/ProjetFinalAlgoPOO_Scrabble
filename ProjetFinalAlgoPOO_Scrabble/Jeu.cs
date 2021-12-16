@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ProjetFinalAlgoPOO_Scrabble
 {
@@ -10,19 +11,24 @@ namespace ProjetFinalAlgoPOO_Scrabble
         static SacJetons sac_jetons;
         static Dictionnaire dictionnaire;
 
-
+        static void Main()
+        {
+            CommencerPartie();
+            Sauvegarder(@"C:\Users\legco\Downloads\New folder");
+        }
+        /*
         public static void Main_()
         {
 
-            Plateau plateau = new Plateau(@"C:\Users\33782\Source\Repos\ProjetFinalAlgoPOO_Scrabble\ProjetFinalAlgoPOO_Scrabble\Test_Plateau.txt");
+            Plateau plateau = new Plateau();
             plateau.Afficher();
             Plateau.AfficherLegende();
             Console.WriteLine("\nCombien de joueurs vont jouer (2 à 4 joueurs) ?");
             int nombrejoueurs = Convert.ToInt32(Console.ReadLine());
             string nomjoueur = " ";
-            for (int i = 1; i <= nombrejoueurs; i++)
+            for(int i = 1; i <= nombrejoueurs; i++)
             {
-                if (i == 1)
+                if(i == 1)
                 {
                     Console.WriteLine("Nom du " + i + "er joueur : ");
                 }
@@ -36,13 +42,13 @@ namespace ProjetFinalAlgoPOO_Scrabble
             }
             int compteur = 1;
             System.TimeSpan duration = new System.TimeSpan(0, 0, 6, 0);
-            while (sac_jetons.Count(new SacJetons()) < 0) //petit probleme pour le décompte des jetons restants
+            while(sac_jetons.Count(new SacJetons()) < 0) //petit probleme pour le décompte des jetons restants
             {
                 DateTime heure_début = DateTime.Now;
                 Console.Clear();
                 plateau.Afficher();
                 Plateau.AfficherLegende();
-                if (compteur > nombrejoueurs)
+                if(compteur > nombrejoueurs)
                 {
                     compteur -= nombrejoueurs;
                 }
@@ -51,7 +57,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 Joueur.Afficher();
                 Console.WriteLine("Que voulez-vous faire ? \n-Tapez 1 pour remplacer un de vos jetons\n-Tapez 2 pour placer horizontalement un mot\n-Tapez 3 pour placer un mot verticalement\n-Tapez 4 pour passer votre tour");
                 int choix = Convert.ToInt32(Console.ReadLine());
-                switch (choix)// PAS OUBLIER DE RAJOUTER UN TIMER (je vais me renseigner)
+                switch(choix)// PAS OUBLIER DE RAJOUTER UN TIMER (je vais me renseigner)
                 {
                     case 1:
                         //Remplacer un jeton
@@ -75,13 +81,13 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     continue;
                 }
             }
-            for (int i = 1; i <= nombrejoueurs; i++)
+            for(int i = 1; i <= nombrejoueurs; i++)
             {
                 DateTime heure_début = DateTime.Now;
                 Console.Clear();
                 plateau.Afficher();
                 Plateau.AfficherLegende();
-                if (compteur > nombrejoueurs)
+                if(compteur > nombrejoueurs)
                 {
                     compteur -= nombrejoueurs;
                 }
@@ -90,7 +96,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 Joueur.Afficher();
                 Console.WriteLine("Que voulez-vous faire ?\n-Tapez 1 pour passer votre tour \n-Tapez 2 pour placer horizontalement un mot\n-Tapez 3 pour placer un mot verticalement");
                 int choix = Convert.ToInt32(Console.ReadLine());
-                switch (choix)
+                switch(choix)
                 {
                     case 1:
                         break;
@@ -104,7 +110,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                         break;
                 }
                 DateTime heure_fin = DateTime.Now;
-                if (heure_fin - heure_début > duration)
+                if(heure_fin - heure_début > duration)
                 {
                     Console.WriteLine("Temps écoulé, vous avez passé votre chance, vous pourrez rejouer lors d'une autre partie");
                     continue;
@@ -115,6 +121,30 @@ namespace ProjetFinalAlgoPOO_Scrabble
             for(int i = 0; i < nombrejoueurs; i++)
             {
                 Console.WriteLine(nomjoueur.joueurs(i) + " : " + score.joueurs + " points");
+            }
+        }
+        */
+
+        static void Sauvegarder(string folder_path)
+        {
+            int id = new Random().Next(999999);
+
+            string path = System.IO.Path.Combine(folder_path, $"SAUVEGARDE_{id}.csv");
+            using(StreamWriter file = new StreamWriter(path))
+            {
+                file.WriteLine($"DOSSIER;{folder_path}");
+
+                file.WriteLine($"Plateau;Sauvegarde_{id}_Plateau.csv");
+                plateau.SauvegarderJetons(folder_path, $"Sauvegarde_{id}_Plateau.csv");
+
+                file.WriteLine($"SacJetons;Sauvegarde_{id}_SacJetons.csv");
+                sac_jetons.Sauvegarder(folder_path, $"Sauvegarde_{id}_SacJetons.csv");
+
+                for(int i = 0; i < joueurs.Count; i++)
+                {
+                    file.WriteLine($"Joueur;Sauvegarde_{id}_Joueur{i}.csv");
+                    joueurs[i].Sauvegarder(folder_path, $"Sauvegarde_{id}_Joueur{i}.csv");
+                }
             }
         }
     }
