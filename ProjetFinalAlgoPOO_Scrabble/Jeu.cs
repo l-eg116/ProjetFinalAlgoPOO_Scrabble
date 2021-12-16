@@ -119,7 +119,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                             possible &= copie_joueur.EnleverJeton(jetons_utilises[i]) || copie_joueur.EnleverJeton(new Jeton('*'));
                         if(!possible)
                         {
-                            Console.WriteLine("Vous ne pouvez pas poser ce mot ici !");
+                            Console.WriteLine("Vous n'avez pas les jetons pour poser ce mot");
                             Console.WriteLine("\nAppuyez sur une touche pour continuer...");
                             Console.ReadKey();
                             continue;
@@ -150,7 +150,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     }
                     else
                     {
-                        Console.WriteLine("Vous n'avez pas les jetons pour poser ce mot");
+                        Console.WriteLine("Vous ne pouvez pas poser ce mot ici !");
                         Console.WriteLine("\nAppuyez sur une touche pour continuer...");
                         Console.ReadKey();
                         continue;
