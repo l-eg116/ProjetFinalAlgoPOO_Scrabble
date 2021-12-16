@@ -190,9 +190,19 @@ namespace ProjetFinalAlgoPOO_Scrabble
         /// </summary>
         public void Afficher()
         {
-            for(int i = 0; i < poids.GetLength(0); i++)
+            Console.Write("   ");
+            for(int i = 0; i < 10; i++)
+                Console.Write($" {i} ");
+            for(int i = 10; i < 15; i++)
+                Console.Write($" {i}");
+            Console.WriteLine();
+            for(int i = 0; i < 15; i++)
             {
-                for(int j = 0; j < poids.GetLength(1); j++)
+                if(i < 10)
+                    Console.Write($" {i} ");
+                else
+                    Console.Write($"{i} ");
+                for(int j = 0; j < 15; j++)
                 {
                     switch(poids[i, j])
                     {
