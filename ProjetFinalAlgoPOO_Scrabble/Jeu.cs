@@ -391,6 +391,9 @@ namespace ProjetFinalAlgoPOO_Scrabble
             Console.WriteLine(" => Chargement terminé ! Appuyez sur une touche pour continuer <= ");
             Console.ReadKey();
         }
+        /// <summary>
+        /// Place les informations de la partie dans un dossier
+        /// </summary>
         static void Sauvegarder()
         {
             Console.Clear();
