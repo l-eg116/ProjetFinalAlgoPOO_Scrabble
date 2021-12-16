@@ -468,7 +468,7 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     n--;
                 }
                 n = 0;
-                while(x + n < 15 && this.jetons[x + n, y_] != null)
+                while(x + n <= 15 && this.jetons[x + n, y_] != null)
                 {
                     switch(this.poids[x + n, y_])
                     {

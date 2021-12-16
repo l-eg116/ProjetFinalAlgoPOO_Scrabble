@@ -64,11 +64,11 @@ namespace ProjetFinalAlgoPOO_Scrabble
                 foreach(Jeton jet in joueurs[i_joueur].MainCourante)
                 {
                     Console.Write("[ ");
-                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write($"{jet.Lettre}");
                     Console.ResetColor();
                     Console.Write(" | ");
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.Write($"{jet.Valeur} ");
                     Console.ResetColor();
                     Console.Write("] ");
