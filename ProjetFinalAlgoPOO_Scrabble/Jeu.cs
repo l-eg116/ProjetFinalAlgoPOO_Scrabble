@@ -239,6 +239,8 @@ namespace ProjetFinalAlgoPOO_Scrabble
                     }
             }
 
+            Sauvegarder();
+
             Console.Clear();
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
